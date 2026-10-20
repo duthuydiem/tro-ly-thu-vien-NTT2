@@ -1,0 +1,1690 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trợ lý Thư viện – Trường THPT NTT2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#13294B;--navy-2:#1F3B67;--navy-3:#E8EDF5;
+  --gold:#C9A227;--gold-2:#A8851A;--gold-soft:#FBF5E2;
+  --paper:#F6F7F9;--card:#FFFFFF;--ink:#1B2333;--muted:#5C6677;--line:#E1E5EC;
+  --ok:#2E7D4F;--ok-soft:#E8F4EC;--warn:#B4541A;--warn-soft:#FDF0E7;--hl:#FFF0A3;
+  --r:10px;--sans:"Be Vietnam Pro","Segoe UI",Roboto,Arial,sans-serif;--serif:Lora,Georgia,"Times New Roman",serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--paper);color:var(--ink);font:15px/1.6 var(--sans)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- Khung ---------- */
+.app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}
+aside{min-width:0}
+aside{background:var(--navy);color:#fff;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;border-right:4px solid var(--gold)}
+.brand{padding:22px 20px 18px;display:flex;gap:12px;align-items:center;border-bottom:1px solid rgba(255,255,255,.12)}
+.mono{width:46px;height:46px;flex:none;border-radius:50%;background:var(--gold);color:var(--navy);display:grid;place-items:center;font:700 17px/1 var(--serif);overflow:hidden}
+.mono img{width:100%;height:100%;object-fit:contain;background:#fff}
+.brand .t1{font:700 15px/1.3 var(--serif)}
+.brand .t2{font-size:12.5px;opacity:.75;line-height:1.35}
+nav{padding:12px 10px;display:flex;flex-direction:column;gap:2px;overflow:auto;flex:1}
+nav button{all:unset;cursor:pointer;padding:10px 14px;border-radius:8px;font-size:14.5px;color:rgba(255,255,255,.82);border-left:3px solid transparent}
+nav button:hover{background:rgba(255,255,255,.07);color:#fff}
+nav button.on{background:rgba(255,255,255,.1);color:#fff;border-left-color:var(--gold);font-weight:600}
+nav .grp{font-size:11.5px;color:rgba(255,255,255,.45);padding:14px 14px 4px}
+.sidefoot{padding:14px 20px;font-size:12px;opacity:.6;border-top:1px solid rgba(255,255,255,.12)}
+main{padding:28px 34px 60px;min-width:0}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.ph h1{font:700 26px/1.25 var(--serif);color:var(--navy);margin:0}
+.ph p{margin:4px 0 0;color:var(--muted);max-width:70ch}
+.panel{display:none}.panel.on{display:block}
+
+/* ---------- Thành phần ---------- */
+.grid2{display:grid;grid-template-columns:minmax(330px,440px) 1fr;gap:22px;align-items:start}
+.grid2.even{grid-template-columns:1fr 1fr}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin-bottom:18px}
+.card h2{font:600 17px/1.35 var(--sans);color:var(--navy);margin:0 0 12px;display:flex;align-items:center;gap:10px}
+.card h3{font:600 15px/1.4 var(--sans);color:var(--navy);margin:18px 0 8px}
+.n{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px;display:inline-grid;place-items:center;flex:none}
+.card.dim{opacity:.55}
+label{display:block;font-size:13px;font-weight:600;color:#38414F;margin:12px 0 5px}
+label .opt{font-weight:400;color:var(--muted)}
+input[type=text],input[type=number],input[type=url],input:not([type]),select,textarea{width:100%;padding:9px 11px;border:1px solid #CDD3DD;border-radius:8px;background:#fff}
+textarea{resize:vertical;line-height:1.5}
+input:focus,select:focus,textarea:focus{border-color:var(--navy-2);outline:none;box-shadow:0 0 0 3px rgba(31,59,103,.12)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.chk{display:flex;gap:8px;align-items:flex-start;font-weight:400;font-size:14px;margin:10px 0 0;cursor:pointer}
+.chk input{margin-top:4px}
+.hint{font-size:13px;color:var(--muted);margin:6px 0 0}
+.desc{background:var(--navy-3);border-radius:8px;padding:10px 12px;font-size:13.5px;margin-top:8px;color:#2A3546}
+.note{background:var(--gold-soft);border:1px solid #EBDDA9;border-radius:8px;padding:10px 12px;font-size:13.5px;margin-top:10px}
+.warnbox{background:var(--warn-soft);border:1px solid #F0CDB4;border-radius:8px;padding:10px 12px;font-size:13.5px;margin-top:10px;color:#7A3A12}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.btn{cursor:pointer;border:1px solid #C9D0DB;background:#fff;border-radius:8px;padding:8px 14px;font-weight:600;font-size:14px;color:var(--navy)}
+.btn:hover{border-color:var(--navy-2)}
+.btn.pri{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.pri:hover{background:var(--navy-2)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.btn.gold:hover{background:#D6B13B}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.danger{color:#A12A2A}
+.btn.sm{padding:5px 10px;font-size:13px}
+.btn.big{padding:11px 18px;font-size:15px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+textarea.prompt{background:#F3F5F9;font-size:13px;height:180px;color:#2A3343}
+.msg{font-size:13.5px;margin-top:8px;min-height:1em;color:var(--ok)}
+.msg.err{color:#A12A2A}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;padding:2px 9px;border-radius:99px;background:var(--navy-3);color:var(--navy)}
+.tag.g{background:var(--gold-soft);color:#7A5F0E}
+.empty{border:1px dashed #C9D0DB;border-radius:var(--r);padding:28px;text-align:center;color:var(--muted);background:#FBFCFD}
+
+/* lựa chọn dạng thẻ */
+.choices{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.choice{all:unset;cursor:pointer;border:1px solid var(--line);border-radius:9px;padding:11px 13px;background:#fff;display:block}
+.choice:hover{border-color:#AEB8C8}
+.choice.on{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy);background:#F8FAFD}
+.choice b{display:block;font-size:14px;color:var(--navy);line-height:1.35}
+.choice span{display:block;font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.4}
+
+/* trang chủ */
+.hero{background:var(--navy);color:#fff;border-radius:14px;padding:30px 32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-bottom:22px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:0;top:0;bottom:0;width:10px;background:repeating-linear-gradient(180deg,var(--gold) 0 26px,#E5C964 26px 30px)}
+.hero h1{font:700 30px/1.2 var(--serif);margin:0 0 8px}
+.hero p{margin:0;opacity:.85;max-width:62ch}
+.hero .yr{font:600 14px/1 var(--sans);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 14px;border-radius:99px;white-space:nowrap;margin-right:16px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.steps .card{margin:0}
+.steps b{display:block;color:var(--navy);margin:8px 0 4px}
+.steps p{margin:0;font-size:13.5px;color:var(--muted)}
+.months{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.month{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:#fff}
+.month.now{border-color:var(--gold);box-shadow:inset 4px 0 0 var(--gold)}
+.month h4{margin:0 0 6px;font:600 15px/1.3 var(--sans);color:var(--navy);display:flex;justify-content:space-between}
+.month h4 small{font-weight:600;font-size:11.5px;color:#7A5F0E;background:var(--gold-soft);padding:1px 8px;border-radius:99px}
+.month ul{margin:0 0 8px;padding-left:18px;font-size:13.5px;color:#38414F}
+.stat{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+.stat div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 16px;min-width:150px}
+.stat b{font:700 22px/1 var(--serif);color:var(--navy);display:block}
+.stat span{font-size:12.5px;color:var(--muted)}
+
+/* ---------- Văn bản ---------- */
+.docwrap{background:#E9ECF1;border-radius:var(--r);padding:22px;overflow:auto}
+.page{background:#fff;width:100%;max-width:820px;margin:0 auto;padding:56px 58px 64px 78px;box-shadow:0 1px 3px rgba(19,41,75,.12);font-family:"Times New Roman",Times,serif;font-size:17px;line-height:1.45;color:#000}
+.page table.hd{width:100%;border-collapse:collapse;margin-bottom:18px}
+.page table.hd td{vertical-align:top;text-align:center;font-size:14.5px;padding:0;line-height:1.35}
+.page table.hd td div{white-space:nowrap}
+.page .line{display:block;width:34%;margin:3px auto 0;border-top:1px solid #000}
+.page .line.w{width:58%}
+.page .title{text-align:center;font-weight:bold;margin:14px 0 0;font-size:17px}
+.page .ty{text-align:center;font-weight:bold;font-size:17px}
+.page .kg{text-align:center;margin:10px 0 6px}
+.page .body h2,.page .body h3,.page .body h4{font-family:"Times New Roman",Times,serif;color:#000;display:block}
+.page .body h2{font-size:17px;font-weight:bold;margin:12px 0 4px;text-align:left}
+.page table.hd td:last-child b{white-space:nowrap}
+.page .body h3{font-size:17px;font-weight:bold;margin:8px 0 4px}
+.page .body h4{font-size:17px;font-weight:bold;font-style:italic;margin:6px 0 4px}
+.page .body p{margin:0 0 6px;text-indent:1.1cm;text-align:justify}
+.page .body ul,.page .body ol{margin:0 0 6px;padding-left:1.6cm}
+.page .body li{text-align:justify;margin-bottom:2px}
+.page .body table{width:100%;border-collapse:collapse;margin:6px 0 10px;font-size:15px}
+.page .body th,.page .body td{border:1px solid #000;padding:4px 6px;vertical-align:top;text-align:left}
+.page .body th{font-weight:bold;text-align:center;background:#F2F2F2}
+.page table.ft{width:100%;border-collapse:collapse;margin-top:18px}
+.page table.ft td{vertical-align:top;padding:0}
+.page .nn{font-size:14px}.page .nn b{font-style:italic;font-size:15px}
+.page .sig{text-align:center;font-weight:bold}
+.page .sig .nm{margin-top:80px}
+.ph-mark{background:var(--hl);padding:0 2px;border-radius:2px}
+.page[contenteditable=true]{outline:2px dashed var(--gold);outline-offset:4px}
+.savedlist{display:flex;flex-direction:column;gap:8px;max-height:330px;overflow:auto}
+.saved{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:#fff}
+.saved .meta{flex:1;min-width:0}
+.saved .meta b{display:block;font-size:14px;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.saved .meta span{font-size:12.5px;color:var(--muted)}
+
+/* ---------- Đầu ra văn bản ngắn ---------- */
+.outbox{white-space:pre-wrap;background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-size:14.5px;min-height:120px}
+.slots .slot{margin-bottom:6px}
+.scene{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fff}
+.scene h4{margin:0 0 8px;color:var(--navy);font-size:15px;display:flex;justify-content:space-between;align-items:center}
+.scene .kv{font-size:13.5px;margin:4px 0}
+.scene textarea{font-size:12.5px;background:#F3F5F9;height:96px}
+.checks{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.checks label{font-weight:400;font-size:14px;margin:0;display:flex;gap:8px;align-items:flex-start}
+.checks input{margin-top:4px}
+
+/* ---------- Hoàn thiện poster ---------- */
+.stage{background:repeating-conic-gradient(#EEF0F4 0 25%,#FAFBFC 0 50%) 0 0/22px 22px;border:1px solid var(--line);border-radius:var(--r);padding:12px;text-align:center}
+.stage canvas{max-width:100%;max-height:78vh;touch-action:none;box-shadow:0 2px 10px rgba(19,41,75,.18);background:#fff;cursor:grab}
+.layers{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.layer{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:#fff;cursor:pointer;font-size:13.5px}
+.layer.on{border-color:var(--navy);background:#F8FAFD}
+.layer span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+input[type=range]{width:100%;accent-color:var(--navy)}
+input[type=checkbox]{accent-color:var(--navy)}
+input[type=color]{width:46px;height:34px;border:1px solid #CDD3DD;border-radius:8px;padding:2px;background:#fff}
+
+/* nhân vật */
+.plist{display:flex;flex-direction:column;gap:8px}
+.pitem{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:#fff}
+.pitem .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.pitem b{color:var(--navy)}
+.pitem p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:99;border:1px solid var(--gold)}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:1100px){.grid2,.grid2.even{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  aside{position:sticky;height:auto;z-index:5;border-right:0;border-bottom:3px solid var(--gold)}
+  .brand{padding:12px 14px}
+  nav{flex-direction:row;overflow-x:auto;padding:6px 8px}
+  nav .grp{display:none}
+  nav button{white-space:nowrap;border-left:0;border-bottom:3px solid transparent;border-radius:6px}
+  nav button.on{border-bottom-color:var(--gold)}
+  .sidefoot{display:none}
+  main{padding:18px 14px 50px}
+  .row,.row3,.steps{grid-template-columns:1fr}
+  .hero{grid-template-columns:1fr;padding:24px}
+  .page{padding:26px 20px;font-size:15px}
+}
+@media print{aside,.ph,.noprint{display:none!important}.app{display:block}main{padding:0}.docwrap{background:none;padding:0}.page{box-shadow:none;max-width:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand">
+    <div class="mono" id="sbLogo">TV</div>
+    <div><div class="t1" id="sbName">Thư viện Trường THPT NTT2</div><div class="t2">Trợ lý soạn thảo và truyền thông</div></div>
+  </div>
+  <nav id="nav">
+    <button data-tab="home" class="on">Bắt đầu</button>
+    <div class="grp">Soạn thảo</div>
+    <button data-tab="vanban">Văn bản hành chính</button>
+    <button data-tab="sach">Giới thiệu sách</button>
+    <div class="grp">Truyền thông</div>
+    <button data-tab="poster">Poster AI</button>
+    <button data-tab="hoanthien">Hoàn thiện poster</button>
+    <button data-tab="video">Video ngắn</button>
+    <div class="grp">Thiết lập</div>
+    <button data-tab="hoso">Hồ sơ và nhận diện</button>
+    <button data-tab="caidat">Căn cứ và sao lưu</button>
+  </nav>
+  <div class="sidefoot">Dữ liệu lưu trên máy này. Sao lưu định kỳ ở mục Căn cứ và sao lưu.</div>
+</aside>
+<main>
+
+<!-- ================= BẮT ĐẦU ================= -->
+<section class="panel on" id="p_home">
+  <div class="hero">
+    <div>
+      <h1 id="heroName">Thư viện Trường THPT NTT2</h1>
+      <p>Soạn kế hoạch, báo cáo đúng thể thức; viết bài giới thiệu sách; tạo câu lệnh vẽ poster và kịch bản video bằng ChatGPT, Gemini hoặc Claude. Ứng dụng không tự gọi AI và không gửi dữ liệu của trường đi đâu.</p>
+    </div>
+    <div class="yr" id="heroYear">Năm học 2026-2027</div>
+  </div>
+  <div class="steps">
+    <div class="card"><span class="n">1</span><b>Khai báo hồ sơ</b><p>Tên trường, số liệu thư viện, người ký. Làm một lần, dùng cho mọi văn bản.</p></div>
+    <div class="card"><span class="n">2</span><b>Tạo câu lệnh</b><p>Chọn mẫu, nhập hiện trạng. Ứng dụng ghép quy tắc chống bịa số liệu và căn cứ pháp lý.</p></div>
+    <div class="card"><span class="n">3</span><b>Dán vào AI</b><p>Sao chép câu lệnh sang ChatGPT, Gemini hoặc Claude, rồi dán câu trả lời trở lại.</p></div>
+    <div class="card"><span class="n">4</span><b>Rà soát và xuất</b><p>Điền các chỗ tô vàng, sửa trực tiếp, xuất Word hoặc in PDF.</p></div>
+  </div>
+  <div class="stat" id="homeStat" style="margin:18px 0 6px"></div>
+  <div class="card" style="margin-top:18px">
+    <h2>Lịch văn hóa đọc năm học</h2>
+    <p class="hint" style="margin:-4px 0 14px">Tháng hiện tại được đánh dấu. Bấm nút để mở công cụ với dịp đã chọn sẵn.</p>
+    <div class="months" id="months"></div>
+  </div>
+</section>
+
+<!-- ================= VĂN BẢN ================= -->
+<section class="panel" id="p_vanban">
+  <div class="ph"><div><h1>Văn bản hành chính</h1><p>Phần thể thức (quốc hiệu, tên trường, số ký hiệu, nơi nhận, chữ ký) do ứng dụng tự dựng theo Nghị định 30/2020/NĐ-CP. AI chỉ viết phần nội dung.</p></div></div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <h2><span class="n">1</span>Chọn mẫu và nhập hiện trạng</h2>
+        <label for="docSel">Mẫu văn bản</label>
+        <select id="docSel"></select>
+        <div class="desc" id="docDesc"></div>
+        <div id="docOther"></div>
+        <label for="d_trichyeu">Trích yếu (tiêu đề sau chữ KẾ HOẠCH / BÁO CÁO / TỜ TRÌNH)</label>
+        <input id="d_trichyeu">
+        <div class="row">
+          <div><label for="d_so">Số văn bản <span class="opt">(để trống nếu chưa có)</span></label><input id="d_so" placeholder="VD: 25"></div>
+          <div><label for="d_ngay">Ngày ban hành</label><input id="d_ngay" type="date"></div>
+        </div>
+        <div id="docExtra"></div>
+        <label for="d_hientrang">Hiện trạng, số liệu, yêu cầu cụ thể</label>
+        <textarea id="d_hientrang" rows="7" placeholder="Càng cụ thể càng tốt: điểm mạnh, khó khăn, số liệu năm trước, việc đã làm và chưa làm, chỉ đạo của Ban Giám hiệu..."></textarea>
+        <p class="hint" id="profSum"></p>
+        <label for="d_cancu">Căn cứ riêng của đơn vị <span class="opt">(văn bản của Sở, kế hoạch năm học của trường...)</span></label>
+        <textarea id="d_cancu" rows="2" placeholder="Mỗi dòng một văn bản, ghi đúng số hiệu, ngày ban hành"></textarea>
+        <label for="d_them">Yêu cầu thêm <span class="opt">(độ dài, điểm nhấn)</span></label>
+        <input id="d_them" placeholder="VD: khoảng 4 trang; nhấn mạnh hoạt động gắn với hướng nghiệp">
+        <div class="row">
+          <div><label for="d_kycv">Chức vụ người ký</label><select id="d_kycv"></select></div>
+          <div><label for="d_kyten">Họ tên người ký</label><input id="d_kyten"></div>
+        </div>
+        <label for="d_noinhan">Nơi nhận <span class="opt">(mỗi dòng một nơi)</span></label>
+        <textarea id="d_noinhan" rows="4"></textarea>
+        <div class="bar"><button class="btn pri big" id="btnDocPrompt">Tạo câu lệnh</button></div>
+        <div class="msg" id="docMsg"></div>
+      </div>
+      <div class="card dim" id="docSt2">
+        <h2><span class="n">2</span>Sao chép câu lệnh, dán vào AI</h2>
+        <textarea class="prompt" id="docPrompt" readonly placeholder="Câu lệnh hiện ở đây sau khi bấm Tạo câu lệnh."></textarea>
+        <div class="bar" data-ai="docPrompt"></div>
+        <p class="hint">Có công văn hoặc kế hoạch của cấp trên? Đính kèm file đó vào cùng tin nhắn khi dán câu lệnh.</p>
+      </div>
+      <div class="card dim" id="docSt3">
+        <h2><span class="n">3</span>Dán câu trả lời của AI</h2>
+        <textarea id="docPaste" rows="6" placeholder="Bấm nút Sao chép dưới câu trả lời của AI, rồi dán vào đây (Ctrl+V)."></textarea>
+        <div class="bar"><button class="btn pri" id="btnDocRender">Dựng văn bản</button></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h2><span class="n">4</span>Văn bản hoàn chỉnh</h2>
+        <div class="bar noprint" style="margin:0 0 12px">
+          <button class="btn" id="btnDocEdit">Sửa trực tiếp</button>
+          <button class="btn pri" id="btnDocWord">Tải file Word</button>
+          <button class="btn" id="btnDocPrint">In / Lưu PDF</button>
+          <button class="btn" id="btnDocCopy">Sao chép nội dung</button>
+          <button class="btn gold" id="btnDocSave">Lưu vào danh sách</button>
+        </div>
+        <div class="note noprint" id="docCheck" style="display:none"></div>
+        <div class="docwrap"><div class="page" id="docPage"><div class="empty" style="font-family:var(--sans)">Văn bản hiện ở đây. Chỗ <span class="ph-mark">[....]</span> tô vàng là số liệu cần điền.</div></div></div>
+      </div>
+      <div class="card">
+        <h2>Văn bản đã lưu</h2>
+        <div class="savedlist" id="docSaved"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GIỚI THIỆU SÁCH ================= -->
+<section class="panel" id="p_sach">
+  <div class="ph"><div><h1>Giới thiệu sách</h1><p>Bạn cung cấp chi tiết thật của cuốn sách; AI chỉ được dùng đúng những chi tiết đó để viết, không tự thêm tình tiết hay câu trích.</p></div></div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <h2><span class="n">1</span>Thông tin sách</h2>
+        <label class="chk"><input type="checkbox" id="bk_many"> Giới thiệu nhiều sách cùng một chủ đề</label>
+        <div id="bkOne">
+          <label for="bk_ten">Tên sách</label><input id="bk_ten" placeholder="Ghi đúng như trên bìa">
+          <div class="row"><div><label for="bk_tg">Tác giả, dịch giả</label><input id="bk_tg"></div><div><label for="bk_nxb">Nhà xuất bản, năm</label><input id="bk_nxb"></div></div>
+        </div>
+        <div id="bkMany" style="display:none">
+          <label for="bk_list">Danh sách sách (mỗi dòng: Tên sách – Tác giả – một ý giá trị nhất)</label>
+          <textarea id="bk_list" rows="5"></textarea>
+        </div>
+        <div class="row"><div><label for="bk_loai">Thể loại</label><select id="bk_loai"></select></div><div><label for="bk_lop">Người đọc</label><select id="bk_lop"><option>Học sinh lớp 10</option><option>Học sinh lớp 11</option><option>Học sinh lớp 12</option><option selected>Học sinh THPT nói chung</option><option>Giáo viên</option><option>Phụ huynh</option></select></div></div>
+        <div class="row"><div><label for="bk_kh">Ký hiệu xếp giá</label><input id="bk_kh"></div><div><label for="bk_vt">Vị trí trong thư viện</label><input id="bk_vt" placeholder="VD: giá Văn học, tầng 2"></div></div>
+      </div>
+      <div class="card">
+        <h2><span class="n">2</span>Cốt lõi cuốn sách</h2>
+        <p class="hint" style="margin-top:-4px">Chỉ ghi những gì bạn đã đọc và chắc chắn. Ô nào để trống, AI sẽ không viết về ý đó.</p>
+        <label for="bk_vd">Cuốn sách giúp người đọc giải quyết điều gì?</label><input id="bk_vd" placeholder="VD: phân vân chọn ngành, sợ chọn sai">
+        <label for="bk_ai">Ai nên đọc?</label><input id="bk_ai">
+        <label for="bk_ct">Chi tiết đắt nhất (tình tiết, ý tưởng, số trang)</label><textarea id="bk_ct" rows="3"></textarea>
+        <label for="bk_trich">Câu trích nguyên văn <span class="opt">(chép đúng từ sách, kèm số trang)</span></label><textarea id="bk_trich" rows="2"></textarea>
+        <label for="bk_khac">Điều khiến sách khác các sách cùng chủ đề</label><input id="bk_khac">
+        <label for="bk_cat">Dừng kể ở đâu để người đọc tò mò?</label><input id="bk_cat">
+        <label for="bk_gt">Giá trị cụ thể người đọc nhận được</label><input id="bk_gt">
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h2><span class="n">3</span>Cách kể</h2>
+        <div class="choices" id="bkScripts"></div>
+      </div>
+      <div class="card">
+        <h2><span class="n">4</span>Sản phẩm cần viết</h2>
+        <div class="choices" id="bkOuts"></div>
+        <div class="bar"><button class="btn pri big" id="btnBkPrompt">Tạo câu lệnh</button><button class="btn" id="btnBkSave">Lưu sách</button><button class="btn" id="btnBkOpen">Sách đã lưu <b id="bkCount"></b></button><button class="btn ghost" id="btnBkNew">Sách mới</button></div>
+        <div class="msg" id="bkMsg"></div>
+        <div id="bkSavedBox" style="display:none;margin-top:12px" class="savedlist"></div>
+      </div>
+      <div class="card dim" id="bkSt5">
+        <h2><span class="n">5</span>Câu lệnh và kết quả</h2>
+        <textarea class="prompt" id="bkPrompt" readonly></textarea>
+        <div class="bar" data-ai="bkPrompt"></div>
+        <label for="bkPaste">Dán câu trả lời của AI</label>
+        <textarea id="bkPaste" rows="7"></textarea>
+        <div class="bar">
+          <button class="btn" id="btnBkCopyOut">Sao chép bài viết</button>
+          <button class="btn gold" id="btnBkToPoster" style="display:none">Chuyển chữ sang Poster AI</button>
+          <button class="btn gold" id="btnBkToVideo" style="display:none">Chuyển sang Video ngắn</button>
+        </div>
+        <h3>Kiểm tra trước khi đăng</h3>
+        <div class="checks" id="bkCheck"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POSTER AI ================= -->
+<section class="panel" id="p_poster">
+  <div class="ph"><div><h1>Poster AI</h1><p>Tạo câu lệnh vẽ poster cho ChatGPT hoặc Gemini, có quy tắc chữ tiếng Việt và nhận diện của thư viện. Chèn QR, logo, ngày giờ chính xác ở bước Hoàn thiện poster.</p></div></div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <h2><span class="n">1</span>Loại poster</h2>
+        <div class="choices" id="psStyles"></div>
+      </div>
+      <div class="card">
+        <h2><span class="n">2</span>Hình ảnh</h2>
+        <div class="row"><div><label for="psChar">Nhân vật chính</label><select id="psChar"></select></div><div><label for="psExtras">Nhân vật phụ</label><select id="psExtras"></select></div></div>
+        <label class="chk"><input type="checkbox" id="psAttach"> Tôi sẽ đính kèm ảnh nhân vật hoặc ảnh thật khi dán câu lệnh</label>
+        <div class="row"><div><label for="psSetting">Bối cảnh</label><select id="psSetting"></select></div><div><label for="psOcc">Dịp</label><select id="psOcc"></select></div></div>
+        <label class="chk"><input type="checkbox" id="psSetAttach"> Tôi sẽ đính kèm ảnh thật của thư viện làm bối cảnh</label>
+        <div class="row"><div><label for="psMood">Không khí, ánh sáng</label><select id="psMood"></select></div><div><label for="psShot">Góc nhìn</label><select id="psShot"></select></div></div>
+        <div class="row"><div><label for="psRatio">Khổ ảnh</label><select id="psRatio"><option value="">Theo loại poster</option><option value="2:3">Dọc 2:3 (in A-series, Facebook)</option><option value="4:5">Dọc 4:5 (Facebook)</option><option value="1:1">Vuông 1:1</option><option value="9:16">Story 9:16</option><option value="16:9">Ngang 16:9 (màn hình)</option></select></div><div><label for="psColor">Màu chủ đạo <span class="opt">(để trống: dùng màu thư viện)</span></label><input id="psColor"></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h2><span class="n">3</span>Chữ trên poster</h2>
+        <details>
+          <summary style="cursor:pointer;font-weight:600;color:var(--navy)">Nhờ AI viết chữ (không bắt buộc)</summary>
+          <label for="psTopic">Mô tả nội dung</label><textarea id="psTopic" rows="3" placeholder="VD: Tuần lễ đọc sách hướng nghiệp, 10–14/11, tại thư viện, có trưng bày sách theo nhóm ngành và góc tư vấn chọn ngành."></textarea>
+          <div class="bar"><button class="btn" id="btnPsTextPr">Tạo câu lệnh viết chữ</button></div>
+          <textarea class="prompt" id="psTextPr" readonly style="height:110px;margin-top:8px"></textarea>
+          <div class="bar" data-ai="psTextPr"></div>
+          <label for="psTextPaste">Dán câu trả lời (dạng [Tiêu đề] ...)</label><textarea id="psTextPaste" rows="3"></textarea>
+          <div class="bar"><button class="btn pri sm" id="btnPsFill">Điền vào các ô bên dưới</button></div>
+        </details>
+        <div class="slots" id="psSlots"></div>
+        <label class="chk"><input type="checkbox" id="psReserve" checked> Chừa khoảng trống ở góc dưới để chèn QR, logo, thông tin chính xác</label>
+        <label for="psExtra">Yêu cầu thêm cho hình vẽ <span class="opt">(không bắt buộc)</span></label><input id="psExtra">
+        <div class="bar"><button class="btn pri big" id="btnPsPrompt">Tạo câu lệnh vẽ</button></div>
+        <div class="msg" id="psMsg"></div>
+      </div>
+      <div class="card dim" id="psSt4">
+        <h2><span class="n">4</span>Dán câu lệnh vào ChatGPT hoặc Gemini</h2>
+        <textarea class="prompt" id="psPrompt" readonly style="height:230px"></textarea>
+        <div class="bar" data-ai="psPrompt" data-only="chatgpt,gemini"></div>
+        <div class="note">Chữ tiếng Việt do AI vẽ vẫn có thể sai dấu. Kiểm tra kỹ; nếu sai, yêu cầu AI vẽ lại hoặc tắt chữ đó và gõ lại ở bước Hoàn thiện poster.</div>
+        <div class="bar"><button class="btn gold" onclick="go('hoanthien')">Sang bước Hoàn thiện poster</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HOÀN THIỆN POSTER ================= -->
+<section class="panel" id="p_hoanthien">
+  <div class="ph"><div><h1>Hoàn thiện poster</h1><p>Mở ảnh AI đã vẽ (hoặc tạo nền màu), thêm chữ chính xác, mã QR thật, logo trường. Kéo để di chuyển lớp.</p></div></div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <h2>Ảnh nền</h2>
+        <label class="btn pri" style="display:inline-block;margin:0">Mở ảnh từ máy<input type="file" accept="image/*" id="finFile" hidden></label>
+        <h3>Hoặc tạo nền trơn</h3>
+        <div class="row"><div><label for="finRatio">Khổ</label><select id="finRatio"><option value="2:3">Dọc 2:3</option><option value="4:5">Dọc 4:5</option><option value="1:1">Vuông 1:1</option><option value="9:16">Story 9:16</option><option value="16:9">Ngang 16:9</option></select></div><div><label for="finBg">Kiểu nền</label><select id="finBg"><option value="navy">Xanh navy, viền vàng</option><option value="white">Trắng, dải navy</option><option value="gold">Vàng nhạt</option></select></div></div>
+        <div class="bar"><button class="btn" id="btnFinBlank">Tạo nền</button></div>
+      </div>
+      <div class="card">
+        <h2>Thêm lớp</h2>
+        <div class="bar" style="margin-top:0">
+          <button class="btn sm" id="btnAddText">Chữ</button>
+          <button class="btn sm" id="btnAddQR">Mã QR</button>
+          <button class="btn sm" id="btnAddLogo">Logo thư viện</button>
+          <label class="btn sm" style="margin:0">Ảnh khác<input type="file" accept="image/*" id="finImg" hidden></label>
+        </div>
+        <div class="layers" id="finLayers"></div>
+        <div id="finProps" style="margin-top:12px"><p class="hint">Chọn một lớp để chỉnh.</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="stage" id="finStage"><canvas id="finCanvas" width="1000" height="1500"></canvas></div>
+        <div class="bar"><button class="btn pri big" id="btnFinPng">Tải ảnh PNG</button><span class="hint" id="finSize"></span></div>
+      </div>
+      <div class="card">
+        <h2>Kiểm tra trước khi đăng</h2>
+        <div class="checks" id="psCheck"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VIDEO ================= -->
+<section class="panel" id="p_video">
+  <div class="ph"><div><h1>Video ngắn</h1><p>Kịch bản chia cảnh, câu lệnh ảnh khung hình và chuyển động cho từng cảnh, lời đọc ghép sẵn, các bước dựng trong CapCut.</p></div></div>
+  <div class="grid2">
+    <div>
+      <div class="card">
+        <h2><span class="n">1</span>Loại video</h2>
+        <select id="vType"></select>
+        <div class="desc" id="vDesc"></div>
+        <div class="row"><div><label for="vDur">Thời lượng (giây)</label><input type="number" id="vDur" min="15" max="180"></div><div><label for="vScenes">Số cảnh</label><input type="number" id="vScenes" min="3" max="12"></div></div>
+      </div>
+      <div class="card">
+        <h2><span class="n">2</span>Hình ảnh và âm thanh</h2>
+        <div class="row"><div><label for="vChar">Nhân vật dẫn</label><select id="vChar"></select></div><div><label for="vLook">Phong cách hình ảnh</label><select id="vLook"></select></div></div>
+        <div class="row"><div><label for="vRatio">Khổ video</label><select id="vRatio"><option value="9:16">Dọc 9:16 (Reels, TikTok)</option><option value="16:9">Ngang 16:9 (YouTube, màn hình)</option></select></div><div><label for="vMusic">Nhạc nền</label><select id="vMusic"></select></div></div>
+        <div class="row"><div><label for="vSetting">Bối cảnh chính</label><select id="vSetting"></select></div><div><label for="vMood">Không khí</label><select id="vMood"></select></div></div>
+        <label for="vVoice">Giọng đọc</label><input id="vVoice" value="giọng nữ trẻ, ấm, rõ ràng, tốc độ vừa phải">
+        <label class="chk"><input type="checkbox" id="vEnd" checked> Thêm cảnh kết có tên và logo thư viện</label>
+      </div>
+      <div class="card">
+        <h2><span class="n">3</span>Nội dung</h2>
+        <textarea id="vInfo" rows="8"></textarea>
+        <p class="hint" id="vHint"></p>
+        <div class="bar"><button class="btn pri big" id="btnVPrompt">Tạo câu lệnh kịch bản</button></div>
+        <div class="msg" id="vMsg"></div>
+      </div>
+    </div>
+    <div>
+      <div class="card dim" id="vSt4">
+        <h2><span class="n">4</span>Nhờ AI viết kịch bản chia cảnh</h2>
+        <textarea class="prompt" id="vPr" readonly></textarea>
+        <div class="bar" data-ai="vPr"></div>
+        <label for="vPaste">Dán kịch bản AI trả về</label>
+        <textarea id="vPaste" rows="6" placeholder="Dán nguyên câu trả lời có dạng [CẢNH 1] ..."></textarea>
+        <div class="bar"><button class="btn pri" id="btnVParse">Tách cảnh</button></div>
+      </div>
+      <div class="card dim" id="vSt5">
+        <h2><span class="n">5</span>Từng cảnh: tạo ảnh, rồi cho chuyển động</h2>
+        <div id="vOut"><p class="hint">Sau khi tách cảnh, mỗi cảnh có câu lệnh ảnh khung hình, câu lệnh chuyển động, lời đọc và chữ trên màn hình.</p></div>
+      </div>
+      <div class="card dim" id="vSt6">
+        <h2><span class="n">6</span>Ghép video trong CapCut</h2>
+        <label for="vAllVoice">Toàn bộ lời đọc (dán vào công cụ chuyển văn bản thành giọng nói)</label>
+        <textarea id="vAllVoice" rows="5" readonly></textarea>
+        <div class="bar"><button class="btn sm pri" data-copy="vAllVoice">Sao chép lời đọc</button></div>
+        <div class="row" style="margin-top:6px">
+          <div><label for="vThumb">Câu lệnh ảnh bìa</label><textarea class="prompt" id="vThumb" readonly style="height:120px"></textarea><div class="bar"><button class="btn sm" data-copy="vThumb">Sao chép</button></div></div>
+          <div><label for="vCap">Câu lệnh viết chú thích bài đăng</label><textarea class="prompt" id="vCap" readonly style="height:120px"></textarea><div class="bar"><button class="btn sm" data-copy="vCap">Sao chép</button></div></div>
+        </div>
+        <h3>Các bước dựng</h3>
+        <ol id="vCapcut" style="margin:0;padding-left:20px;font-size:14px"></ol>
+        <h3>Kiểm tra trước khi đăng</h3>
+        <div class="checks" id="vCheck"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HỒ SƠ ================= -->
+<section class="panel" id="p_hoso">
+  <div class="ph"><div><h1>Hồ sơ và nhận diện</h1><p>Thông tin ở đây được tự động đưa vào mọi văn bản, poster và video.</p></div><button class="btn pri big" id="btnHosoSave">Lưu hồ sơ</button></div>
+  <div class="grid2 even">
+    <div>
+      <div class="card">
+        <h2>Thông tin đơn vị</h2>
+        <label for="h_chuquan">Cơ quan chủ quản (in hoa)</label><input id="h_chuquan">
+        <label for="h_ten">Tên trường (in hoa, ghi đầy đủ)</label><input id="h_ten">
+        <div class="row"><div><label for="h_kyhieu">Chữ viết tắt trong số ký hiệu</label><input id="h_kyhieu" placeholder="VD: NTT2"></div><div><label for="h_diadanh">Địa danh ghi trên văn bản</label><input id="h_diadanh" placeholder="Tên xã/phường hoặc tỉnh"></div></div>
+        <div class="row"><div><label for="h_namhoc">Năm học</label><input id="h_namhoc"></div><div><label for="h_nguoipt">Người phụ trách thư viện</label><input id="h_nguoipt" placeholder="Họ tên"></div></div>
+        <div class="row"><div><label for="h_ht">Hiệu trưởng</label><input id="h_ht" placeholder="Họ tên"></div><div><label for="h_pht">Phó Hiệu trưởng phụ trách thư viện</label><input id="h_pht" placeholder="Họ tên"></div></div>
+        <label for="h_quymo">Quy mô trường</label><textarea id="h_quymo" rows="2" placeholder="VD: 36 lớp (12 lớp mỗi khối), [số] học sinh, [số] giáo viên"></textarea>
+        <label for="h_solieu">Số liệu thư viện</label><textarea id="h_solieu" rows="4" placeholder="Vốn tài liệu (SGK, tham khảo, nghiệp vụ, sách điện tử), diện tích, chỗ ngồi, phần mềm quản lý, lượt mượn năm trước, mức đạt chuẩn hiện tại..."></textarea>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h2>Nhận diện thư viện</h2>
+        <label for="id_name">Tên thư viện hiển thị</label><input id="id_name">
+        <label>Bảng màu <span class="opt">(chính, nhấn, nền)</span></label>
+        <div class="bar" style="margin-top:0"><input type="color" id="id_c1"><input type="color" id="id_c2"><input type="color" id="id_c3"></div>
+        <label>Logo trường hoặc thư viện</label>
+        <div class="bar" style="margin-top:0"><div class="mono" id="id_logoPrev" style="border:1px solid var(--line)">TV</div><label class="btn sm" style="margin:0">Chọn ảnh<input type="file" accept="image/*" id="id_logo" hidden></label><button class="btn sm danger" id="btnLogoRm">Bỏ logo</button></div>
+        <label for="id_dongphuc">Đồng phục học sinh</label><input id="id_dongphuc" placeholder="VD: áo sơ mi trắng, quần tây xanh đậm; nữ sinh mặc áo dài trắng thứ Hai">
+        <label for="id_vung">Vùng miền, cảnh vật địa phương</label><input id="id_vung" placeholder="VD: sông nước miền Tây, hàng cây dầu">
+        <label for="id_khac">Chi tiết đặc trưng của trường</label><textarea id="id_khac" rows="2" placeholder="VD: dãy lớp hai tầng sơn vàng, cổng trường màu xanh"></textarea>
+        <p class="hint">Các đặc trưng này được thêm vào mọi câu lệnh vẽ, để học sinh nhận ra đây là trường mình.</p>
+      </div>
+      <div class="card">
+        <h2>Nhân vật của thư viện</h2>
+        <div class="plist" id="chList"></div>
+        <div class="bar"><button class="btn sm" id="btnChAdd">Thêm nhân vật</button></div>
+      </div>
+      <div class="card">
+        <h2>Bối cảnh riêng của trường</h2>
+        <div class="plist" id="seList"></div>
+        <div class="bar"><button class="btn sm" id="btnSeAdd">Thêm bối cảnh</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CÀI ĐẶT ================= -->
+<section class="panel" id="p_caidat">
+  <div class="ph"><div><h1>Căn cứ và sao lưu</h1><p>Danh mục căn cứ pháp lý AI được phép trích dẫn, và sao lưu toàn bộ dữ liệu.</p></div></div>
+  <div class="grid2 even">
+    <div class="card">
+      <h2>Danh mục căn cứ pháp lý</h2>
+      <p class="hint" style="margin-top:-4px">Mỗi dòng một văn bản. AI chỉ được trích dẫn các văn bản trong danh mục này và căn cứ riêng bạn nhập ở từng văn bản; văn bản khác phải ghi [cần kiểm tra số hiệu].</p>
+      <textarea id="legal" rows="14" style="font-size:13.5px"></textarea>
+      <div class="warnbox">Danh mục mặc định đã đối chiếu ngày 20/10/2026. Trước khi trình ký, kiểm tra hiệu lực tại Cơ sở dữ liệu quốc gia về văn bản pháp luật (vbpl.vn) và bổ sung văn bản hướng dẫn năm học của Bộ, Sở.</div>
+      <div class="bar"><button class="btn pri" id="btnLegalSave">Lưu danh mục</button><button class="btn ghost" id="btnLegalReset">Khôi phục mặc định</button></div>
+    </div>
+    <div>
+      <div class="card">
+        <h2>Sao lưu dữ liệu</h2>
+        <p class="hint" style="margin-top:-4px">Dữ liệu chỉ nằm trong trình duyệt của máy này. Xoá lịch sử duyệt web, đổi máy hoặc dùng cửa sổ ẩn danh sẽ mất dữ liệu. Nên sao lưu sau mỗi lần làm việc quan trọng.</p>
+        <div class="bar"><button class="btn pri" id="btnBackup">Tải file sao lưu</button><label class="btn" style="margin:0">Khôi phục từ file<input type="file" accept=".json" id="restoreFile" hidden></label></div>
+        <div class="msg" id="bkpMsg"></div>
+      </div>
+      <div class="card">
+        <h2>Trang AI mặc định</h2>
+        <select id="aiDefault"><option value="chatgpt">ChatGPT</option><option value="gemini">Gemini</option><option value="claude">Claude</option></select>
+        <p class="hint">Nút sao chép lớn sẽ mở trang này. Các trang khác vẫn có nút riêng.</p>
+      </div>
+      <div class="card">
+        <h2>Xoá dữ liệu</h2>
+        <p class="hint" style="margin-top:-4px">Xoá toàn bộ hồ sơ, văn bản và sách đã lưu trên máy này. Tải file sao lưu trước khi xoá.</p>
+        <div class="bar"><button class="btn danger" id="btnWipe">Xoá toàn bộ dữ liệu</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+/* =====================================================================
+   TRỢ LÝ THƯ VIỆN – TRƯỜNG THPT NTT2
+   Dữ liệu mẫu. Mọi nội dung bên dưới là khung hướng dẫn cho AI,
+   không chứa số liệu của trường.
+   ===================================================================== */
+"use strict";
+
+const LEGAL_DEFAULT = [
+ "Luật Thư viện số 46/2019/QH14 ngày 21/11/2019",
+ "Nghị định số 93/2020/NĐ-CP ngày 18/8/2020 của Chính phủ quy định chi tiết một số điều của Luật Thư viện",
+ "Nghị định số 30/2020/NĐ-CP ngày 05/3/2020 của Chính phủ về công tác văn thư",
+ "Thông tư số 16/2022/TT-BGDĐT ngày 22/11/2022 của Bộ trưởng Bộ Giáo dục và Đào tạo quy định tiêu chuẩn thư viện cơ sở giáo dục mầm non và phổ thông",
+ "Thông tư số 32/2020/TT-BGDĐT ngày 15/9/2020 của Bộ trưởng Bộ Giáo dục và Đào tạo ban hành Điều lệ trường trung học cơ sở, trường trung học phổ thông và trường phổ thông có nhiều cấp học",
+ "Thông tư số 02/2020/TT-BVHTTDL ngày 25/5/2020 của Bộ trưởng Bộ Văn hóa, Thể thao và Du lịch quy định về bảo quản, thanh lọc tài nguyên thông tin",
+ "Quyết định số 329/QĐ-TTg ngày 15/3/2017 của Thủ tướng Chính phủ phê duyệt Đề án phát triển văn hóa đọc trong cộng đồng đến năm 2020, định hướng đến năm 2030",
+ "Quyết định số 206/QĐ-TTg ngày 11/02/2021 của Thủ tướng Chính phủ phê duyệt Chương trình chuyển đổi số ngành thư viện đến năm 2025, định hướng đến năm 2030",
+ "Quyết định số 1862/QĐ-TTg ngày 04/11/2021 của Thủ tướng Chính phủ về việc tổ chức Ngày Sách và Văn hóa đọc Việt Nam"
+].join("\n");
+
+const NN_SCHOOL = "Ban Giám hiệu (để chỉ đạo);\nCác tổ chuyên môn, GVCN (để phối hợp);\nĐoàn Thanh niên trường (để phối hợp);\nLưu: VT, TV.";
+const NN_REPORT = "Ban Giám hiệu (để báo cáo);\nLưu: VT, TV.";
+const NN_TTR = "Như trên;\nLưu: TV.";
+
+/* loai: tên loại văn bản in hoa; kh: chữ viết tắt trong số ký hiệu; signer: school | staff */
+const DOCS = [
+ {id:"kh_namhoc",loai:"KẾ HOẠCH",kh:"KH",nhom:"Kế hoạch",signer:"school",nn:NN_SCHOOL,
+  ten:"Kế hoạch hoạt động thư viện năm học",ty:"Hoạt động thư viện năm học {nam}",
+  mota:"Kế hoạch tổng thể cả năm: mục tiêu đo được, nhiệm vụ theo mảng, bảng triển khai từng tháng, phân công.",
+  khung:`I. MỤC ĐÍCH, YÊU CẦU
+II. ĐẶC ĐIỂM TÌNH HÌNH (thuận lợi, khó khăn – bám sát số liệu và hiện trạng)
+III. MỤC TIÊU VÀ CHỈ TIÊU (mục tiêu chung; BẢNG chỉ tiêu: Chỉ tiêu | Năm học trước | Năm học này)
+IV. NHIỆM VỤ VÀ GIẢI PHÁP
+  1. Tổ chức, quản lý thư viện
+  2. Phát triển tài nguyên thông tin (bổ sung, thanh lọc)
+  3. Xử lý nghiệp vụ, tổ chức kho, hệ thống tra cứu
+  4. Hoạt động và dịch vụ thư viện (mượn trả, hoạt động đọc, giới thiệu sách, sự kiện)
+  5. Phối hợp hoạt động đọc với dạy học các môn, hoạt động trải nghiệm, hướng nghiệp
+  6. Ứng dụng công nghệ thông tin, chuyển đổi số
+  7. Bồi dưỡng nghiệp vụ, phát triển đội ngũ cộng tác viên học sinh
+V. KẾ HOẠCH TRIỂN KHAI THEO THÁNG (BẢNG: Tháng | Nội dung công việc | Người thực hiện | Sản phẩm/Kết quả), từ tháng 8 đến tháng 5 năm sau, mỗi tháng một dòng
+VI. KINH PHÍ VÀ NGUỒN LỰC
+VII. TỔ CHỨC THỰC HIỆN (Hiệu trưởng, Phó Hiệu trưởng phụ trách, nhân viên thư viện, tổ trưởng chuyên môn, GVCN, Đoàn Thanh niên)
+VIII. CHẾ ĐỘ BÁO CÁO, ĐÁNH GIÁ`,
+  hd:"Bảng triển khai phải tách riêng từng tháng, không gộp nhiều tháng vào một dòng. Hoạt động phù hợp học sinh THPT 15–18 tuổi.",extra:[]},
+ {id:"kh_vhd",loai:"KẾ HOẠCH",kh:"KH",nhom:"Kế hoạch",signer:"school",nn:NN_SCHOOL,
+  ten:"Kế hoạch phát triển văn hóa đọc",ty:"Phát triển văn hóa đọc trong nhà trường năm học {nam}",
+  mota:"Xây dựng thói quen đọc cho học sinh, giáo viên: câu lạc bộ, tủ sách lớp, thử thách đọc, đọc gắn với môn học.",
+  khung:`I. MỤC ĐÍCH, YÊU CẦU
+II. THỰC TRẠNG VĂN HÓA ĐỌC CỦA NHÀ TRƯỜNG (số liệu, nguyên nhân)
+III. MỤC TIÊU, CHỈ TIÊU (đo được: tỉ lệ học sinh có thẻ, lượt mượn bình quân, số hoạt động)
+IV. NỘI DUNG VÀ HÌNH THỨC HOẠT ĐỘNG
+  1. Xây dựng môi trường đọc (không gian đọc, tủ sách lớp, góc đọc mở)
+  2. Hoạt động đọc thường xuyên (giới thiệu sách dưới cờ, bản tin thư viện, thử thách đọc theo học kỳ)
+  3. Đọc gắn với môn học, hoạt động trải nghiệm, hướng nghiệp
+  4. Câu lạc bộ đọc sách, đội cộng tác viên thư viện
+  5. Đọc trên nền tảng số
+  6. Phối hợp với gia đình, thư viện công cộng
+V. LỊCH TRIỂN KHAI (BẢNG: Thời gian | Hoạt động | Đối tượng | Phụ trách | Sản phẩm)
+VI. KINH PHÍ
+VII. TỔ CHỨC THỰC HIỆN
+VIII. KIỂM TRA, ĐÁNH GIÁ, KHEN THƯỞNG`,
+  hd:"Ưu tiên hoạt động ít tốn kinh phí, học sinh chủ động tổ chức.",extra:[]},
+ {id:"kh_214",loai:"KẾ HOẠCH",kh:"KH",nhom:"Kế hoạch",signer:"school",nn:NN_SCHOOL,
+  ten:"Kế hoạch Ngày Sách và Văn hóa đọc Việt Nam (21/4)",ty:"Tổ chức các hoạt động hưởng ứng Ngày Sách và Văn hóa đọc Việt Nam năm {y2}",
+  mota:"Kế hoạch sự kiện quanh ngày 21/4: chủ đề, chuỗi hoạt động, kịch bản ngày chính, phân công, kinh phí.",
+  khung:`I. MỤC ĐÍCH, YÊU CẦU
+II. CHỦ ĐỀ, THỜI GIAN, ĐỊA ĐIỂM, THÀNH PHẦN
+III. NỘI DUNG HOẠT ĐỘNG
+  1. Hoạt động tuyên truyền trước sự kiện
+  2. Các hoạt động chính (mỗi hoạt động: mục tiêu, cách tổ chức, đối tượng, sản phẩm)
+  3. Hoạt động hưởng ứng tại lớp
+IV. CHƯƠNG TRÌNH NGÀY CHÍNH (BẢNG: Thời gian | Nội dung | Người phụ trách)
+V. PHÂN CÔNG NHIỆM VỤ (BẢNG: Bộ phận/Cá nhân | Nhiệm vụ | Thời hạn)
+VI. KINH PHÍ (BẢNG: Nội dung | Số lượng | Đơn giá | Thành tiền – số liệu chưa có để [....])
+VII. TỔ CHỨC THỰC HIỆN`,
+  hd:"Có hoạt động cho cả học sinh, giáo viên, phụ huynh. Không tự đặt chủ đề của Bộ, Sở nếu chưa được cung cấp; khi đó ghi [chủ đề theo hướng dẫn của cấp trên].",
+  extra:[{id:"thoigian",label:"Thời gian, địa điểm",ph:"VD: 20–24/4, sân trường và thư viện"},{id:"chude",label:"Chủ đề (nếu có văn bản cấp trên)",ph:""},{id:"hoatdong",label:"Hoạt động dự kiến",ph:"VD: hội sách cũ, thi giới thiệu sách, đọc sách hướng nghiệp"}]},
+ {id:"kh_doc",loai:"KẾ HOẠCH",kh:"KH",nhom:"Kế hoạch",signer:"school",nn:NN_SCHOOL,
+  ten:"Kế hoạch tổ chức hoạt động đọc tại thư viện",ty:"Tổ chức hoạt động đọc tại thư viện năm học {nam}",
+  mota:"Lịch các buổi đọc theo lớp, gắn với Ngữ văn, sinh hoạt lớp, hoạt động trải nghiệm – hướng nghiệp.",
+  khung:`I. MỤC ĐÍCH, YÊU CẦU
+II. ĐỐI TƯỢNG, THỜI LƯỢNG, HÌNH THỨC
+III. NỘI DUNG CÁC BUỔI ĐỌC THEO KHỐI (BẢNG: Khối | Chủ đề | Nội dung | Gắn với môn/hoạt động | Thời điểm)
+IV. QUY TRÌNH MỘT BUỔI ĐỌC (các bước, thời gian từng bước)
+V. LỊCH PHÂN BỔ CHO CÁC LỚP (BẢNG: Tuần | Lớp | Nội dung)
+VI. PHÂN CÔNG
+VII. ĐÁNH GIÁ HIỆU QUẢ (tiêu chí, công cụ: phiếu đọc, sổ theo dõi)`,
+  hd:"Thời lượng mỗi buổi phù hợp tiết học THPT (45 phút). Không làm tăng tải học tập.",extra:[{id:"lich",label:"Khung giờ có thể tổ chức",ph:"VD: tiết sinh hoạt lớp, buổi chiều thứ Năm"}]},
+ {id:"kh_chuan",loai:"KẾ HOẠCH",kh:"KH",nhom:"Kế hoạch",signer:"school",nn:NN_SCHOOL,
+  ten:"Kế hoạch xây dựng thư viện đạt chuẩn (Thông tư 16/2022)",ty:"Xây dựng thư viện đạt tiêu chuẩn theo Thông tư số 16/2022/TT-BGDĐT",
+  mota:"Rà soát từng nhóm tiêu chuẩn, xác định phần chưa đạt, lộ trình và kinh phí khắc phục.",
+  khung:`I. MỤC ĐÍCH, YÊU CẦU
+II. KẾT QUẢ TỰ RÀ SOÁT THEO THÔNG TƯ 16/2022/TT-BGDĐT (BẢNG: Nhóm tiêu chuẩn | Yêu cầu | Hiện trạng | Đạt/Chưa đạt | Ghi chú) theo các nhóm: tài nguyên thông tin; cơ sở vật chất; hoạt động và dịch vụ thư viện; quản lý thư viện
+III. MỤC TIÊU (mức độ phấn đấu, thời hạn)
+IV. NHIỆM VỤ, GIẢI PHÁP KHẮC PHỤC TỪNG NỘI DUNG CHƯA ĐẠT
+V. LỘ TRÌNH THỰC HIỆN (BẢNG: Thời gian | Công việc | Phụ trách | Kết quả)
+VI. DỰ TRÙ KINH PHÍ
+VII. TỔ CHỨC THỰC HIỆN`,
+  hd:"KHÔNG tự nêu định mức cụ thể của Thông tư (diện tích, số bản sách, số chỗ ngồi...) nếu người dùng không cung cấp; ghi [đối chiếu Thông tư 16/2022: ...] để người dùng tra và điền.",
+  extra:[{id:"muc",label:"Mức hiện tại và mức phấn đấu",ph:"VD: chưa đạt; phấn đấu đạt mức độ 1 trong năm học"}]},
+ {id:"kh_cds",loai:"KẾ HOẠCH",kh:"KH",nhom:"Kế hoạch",signer:"school",nn:NN_SCHOOL,
+  ten:"Kế hoạch chuyển đổi số thư viện",ty:"Chuyển đổi số hoạt động thư viện giai đoạn {nam}",
+  mota:"Phần mềm quản lý, mã vạch/QR, thư viện số, dịch vụ trực tuyến, kỹ năng số cho học sinh.",
+  khung:`I. MỤC ĐÍCH, YÊU CẦU
+II. THỰC TRẠNG ỨNG DỤNG CÔNG NGHỆ (hạ tầng, phần mềm, dữ liệu, nhân lực)
+III. MỤC TIÊU (chỉ tiêu đo được, thời hạn)
+IV. NHIỆM VỤ
+  1. Hoàn thiện hạ tầng và phần mềm quản lý
+  2. Số hóa dữ liệu thư mục, gắn mã vạch/QR
+  3. Phát triển tài nguyên số, liên kết thư viện số
+  4. Dịch vụ trực tuyến (tra cứu, đặt mượn, giới thiệu sách trên trang của trường)
+  5. Nâng cao kỹ năng khai thác thông tin, an toàn thông tin cho học sinh
+V. LỘ TRÌNH (BẢNG: Giai đoạn | Nội dung | Phụ trách | Sản phẩm)
+VI. KINH PHÍ
+VII. TỔ CHỨC THỰC HIỆN`,
+  hd:"Không nêu tên phần mềm thương mại cụ thể nếu người dùng không cung cấp.",extra:[]},
+ {id:"kh_bosung",loai:"KẾ HOẠCH",kh:"KH",nhom:"Kế hoạch",signer:"school",nn:NN_SCHOOL,
+  ten:"Kế hoạch bổ sung, phát triển tài nguyên thông tin",ty:"Bổ sung, phát triển tài nguyên thông tin năm học {nam}",
+  mota:"Khảo sát nhu cầu, cơ cấu bổ sung theo môn và loại tài liệu, nguồn kinh phí, quy trình.",
+  khung:`I. MỤC ĐÍCH, YÊU CẦU
+II. THỰC TRẠNG VỐN TÀI LIỆU (BẢNG cơ cấu theo loại: SGK, sách giáo viên, tham khảo theo môn, văn học, kỹ năng – hướng nghiệp, báo tạp chí, tài liệu số)
+III. NHU CẦU BỔ SUNG (căn cứ khảo sát giáo viên, học sinh; chương trình GDPT 2018)
+IV. DANH MỤC ƯU TIÊN BỔ SUNG (BẢNG: Nhóm tài liệu | Số bản dự kiến | Lý do | Nguồn)
+V. NGUỒN KINH PHÍ VÀ XÃ HỘI HÓA (quyên góp sách, ngày hội đổi sách)
+VI. QUY TRÌNH BỔ SUNG, XỬ LÝ NGHIỆP VỤ
+VII. TỔ CHỨC THỰC HIỆN`,
+  hd:"Không đề xuất tên sách cụ thể nếu người dùng không cung cấp; chỉ nêu nhóm tài liệu.",extra:[]},
+ {id:"kh_kiemke",loai:"KẾ HOẠCH",kh:"KH",nhom:"Kế hoạch",signer:"school",nn:NN_SCHOOL,
+  ten:"Kế hoạch kiểm kê và thanh lọc tài nguyên thông tin",ty:"Kiểm kê, thanh lọc tài nguyên thông tin năm học {nam}",
+  mota:"Thành lập tổ kiểm kê, phương pháp, tiêu chí thanh lọc, hồ sơ biên bản, xử lý sau thanh lọc.",
+  khung:`I. MỤC ĐÍCH, YÊU CẦU
+II. PHẠM VI, ĐỐI TƯỢNG, THỜI GIAN KIỂM KÊ
+III. THÀNH PHẦN TỔ KIỂM KÊ (chức danh, nhiệm vụ – họ tên để [....])
+IV. PHƯƠNG PHÁP VÀ CÁC BƯỚC KIỂM KÊ
+V. TIÊU CHÍ THANH LỌC (căn cứ Thông tư số 02/2020/TT-BVHTTDL) VÀ QUY TRÌNH XỬ LÝ
+VI. HỒ SƠ, BIÊN BẢN CẦN LẬP (danh mục)
+VII. LỊCH THỰC HIỆN (BẢNG: Ngày | Công việc | Phụ trách)
+VIII. TỔ CHỨC THỰC HIỆN`,
+  hd:"Không tự diễn giải chi tiết điều khoản của Thông tư nếu không chắc chắn; ghi [đối chiếu Điều ... Thông tư 02/2020/TT-BVHTTDL].",extra:[]},
+ {id:"kh_sukien",loai:"KẾ HOẠCH",kh:"KH",nhom:"Kế hoạch",signer:"school",nn:NN_SCHOOL,
+  ten:"Kế hoạch tổ chức một hoạt động, sự kiện thư viện",ty:"Tổ chức {tensk}",
+  mota:"Tuần lễ đọc sách, cuộc thi giới thiệu sách, ngày hội đổi sách, đọc sách hướng nghiệp...",
+  khung:`I. MỤC ĐÍCH, YÊU CẦU
+II. THỜI GIAN, ĐỊA ĐIỂM, ĐỐI TƯỢNG
+III. NỘI DUNG, HÌNH THỨC (thể lệ nếu là cuộc thi: đối tượng, yêu cầu sản phẩm, tiêu chí chấm, giải thưởng)
+IV. CHƯƠNG TRÌNH CHI TIẾT (BẢNG: Thời gian | Nội dung | Phụ trách)
+V. PHÂN CÔNG (BẢNG)
+VI. KINH PHÍ (BẢNG – số liệu chưa có để [....])
+VII. TỔ CHỨC THỰC HIỆN`,
+  hd:"Tiêu chí chấm (nếu có) dạng bảng có thang điểm.",
+  extra:[{id:"tensk",label:"Tên hoạt động",ph:"VD: Tuần lễ Đọc sách hướng nghiệp"},{id:"thoigian",label:"Thời gian, địa điểm",ph:""}]},
+ {id:"bc_tongket",loai:"BÁO CÁO",kh:"BC",nhom:"Báo cáo",signer:"school",nn:NN_REPORT,
+  ten:"Báo cáo tổng kết công tác thư viện năm học",ty:"Tổng kết công tác thư viện năm học {nam}",
+  mota:"Kết quả so với chỉ tiêu, số liệu hoạt động, ưu điểm, hạn chế và nguyên nhân, bài học, phương hướng.",
+  khung:`I. ĐẶC ĐIỂM TÌNH HÌNH
+II. KẾT QUẢ THỰC HIỆN NHIỆM VỤ
+  1. Kết quả thực hiện chỉ tiêu (BẢNG: Chỉ tiêu | Kế hoạch | Thực hiện | Tỉ lệ | Đánh giá)
+  2. Phát triển tài nguyên thông tin
+  3. Hoạt động và dịch vụ thư viện (BẢNG số liệu mượn trả theo khối/tháng nếu có)
+  4. Phát triển văn hóa đọc, phối hợp dạy học
+  5. Ứng dụng công nghệ thông tin
+III. ĐÁNH GIÁ CHUNG (ưu điểm; hạn chế và nguyên nhân chủ quan, khách quan)
+IV. BÀI HỌC KINH NGHIỆM
+V. PHƯƠNG HƯỚNG NĂM HỌC TỚI
+VI. KIẾN NGHỊ, ĐỀ XUẤT`,
+  hd:"Chỉ dùng số liệu được cung cấp; tỉ lệ phải tính đúng từ số liệu đó. Thiếu số liệu thì để [....].",extra:[]},
+ {id:"bc_hk1",loai:"BÁO CÁO",kh:"BC",nhom:"Báo cáo",signer:"school",nn:NN_REPORT,
+  ten:"Báo cáo sơ kết học kỳ I",ty:"Sơ kết công tác thư viện học kỳ I năm học {nam}",
+  mota:"Kết quả học kỳ I, tồn tại, nhiệm vụ trọng tâm học kỳ II.",
+  khung:`I. KẾT QUẢ THỰC HIỆN HỌC KỲ I (BẢNG: Nội dung | Kế hoạch | Kết quả | Đánh giá)
+II. HẠN CHẾ VÀ NGUYÊN NHÂN
+III. NHIỆM VỤ TRỌNG TÂM HỌC KỲ II (BẢNG: Nhiệm vụ | Thời gian | Phụ trách)
+IV. KIẾN NGHỊ`,
+  hd:"Ngắn gọn, khoảng 2–3 trang.",extra:[]},
+ {id:"ttr_kp",loai:"TỜ TRÌNH",kh:"TTr",nhom:"Tờ trình",signer:"staff",nn:NN_TTR,kinhgui:"Hiệu trưởng {ten}",
+  ten:"Tờ trình đề xuất kinh phí, mua sắm cho thư viện",ty:"Về việc đề xuất {noidung}",
+  mota:"Lý do, nội dung đề xuất, bảng dự toán, hiệu quả dự kiến, kính đề nghị phê duyệt.",
+  khung:`(Đoạn mở: căn cứ, sự cần thiết – không đánh số)
+I. THỰC TRẠNG VÀ SỰ CẦN THIẾT
+II. NỘI DUNG ĐỀ XUẤT
+III. DỰ TOÁN KINH PHÍ (BẢNG: STT | Nội dung | ĐVT | Số lượng | Đơn giá | Thành tiền; dòng Tổng cộng; giá chưa có để [....])
+IV. NGUỒN KINH PHÍ ĐỀ NGHỊ
+V. HIỆU QUẢ DỰ KIẾN
+(Đoạn kết: kính trình Hiệu trưởng xem xét, phê duyệt)`,
+  hd:"Văn phong trình xin ý kiến, lễ độ, ngắn gọn. Không tự đặt đơn giá.",
+  extra:[{id:"noidung",label:"Nội dung đề xuất",ph:"VD: mua bổ sung sách tham khảo môn Ngữ văn và kệ sách mở"}]},
+ {id:"khac",loai:"KẾ HOẠCH",kh:"KH",nhom:"Khác",signer:"school",nn:NN_SCHOOL,other:true,
+  ten:"Văn bản khác (tự mô tả)",ty:"",mota:"Chọn loại văn bản và tự mô tả khung nội dung.",khung:"",hd:"",extra:[]}
+];
+
+const OTHER_TYPES = [["KẾ HOẠCH","KH"],["BÁO CÁO","BC"],["TỜ TRÌNH","TTr"],["THÔNG BÁO","TB"],["QUY CHẾ","QC"],["QUY ĐỊNH","QyĐ"],["CHƯƠNG TRÌNH","CTr"],["PHƯƠNG ÁN","PA"]];
+
+const DOC_RULES = `Bạn là chuyên gia thư viện trường học tại Việt Nam, am hiểu nghiệp vụ thư viện, văn hóa đọc, quản lý giáo dục trung học phổ thông và kỹ thuật trình bày văn bản hành chính theo Nghị định số 30/2020/NĐ-CP.
+Nhiệm vụ: viết PHẦN NỘI DUNG của một văn bản hành chính, hoàn chỉnh, dùng được ngay, bám sát hiện trạng thực tế của đơn vị.
+
+NGUYÊN TẮC BẮT BUỘC
+1. Bám sát dữ liệu được cung cấp. Mỗi mục tiêu, giải pháp phải xuất phát từ một vấn đề có trong hiện trạng; không viết khẩu hiệu chung chung.
+2. KHÔNG bịa số liệu, họ tên, ngày tháng, tên văn bản. Thông tin còn thiếu thì để chỗ trống dạng [....] hoặc [bổ sung: nội dung cần điền].
+3. Căn cứ pháp lý: chỉ trích dẫn văn bản trong DANH MỤC CĂN CỨ và CĂN CỨ RIÊNG bên dưới, ghi đúng số hiệu như danh mục. Văn bản khác nếu cần nhắc tới thì ghi [cần kiểm tra số hiệu]. Không trích dẫn nội dung điều khoản nếu không chắc chắn.
+4. Chỉ tiêu phải đo được (con số, tỉ lệ, thời hạn). Nhiệm vụ phải có người phụ trách và thời gian.
+5. Phù hợp trường trung học phổ thông (học sinh 15–18 tuổi, chương trình GDPT 2018), khả thi với nguồn lực đã mô tả.
+6. Văn phong hành chính, câu ngắn, rõ, không dùng từ ngữ cảm thán, không dùng biểu tượng cảm xúc.`;
+
+const DOC_FORMAT = `ĐỊNH DẠNG TRẢ LỜI
+- CHỈ viết phần nội dung, bắt đầu từ mục đầu tiên của KHUNG. KHÔNG viết quốc hiệu, tiêu ngữ, tên cơ quan, số ký hiệu, địa danh ngày tháng, tên loại văn bản, trích yếu, nơi nhận, chữ ký (phần mềm tự thêm).
+- Markdown: mục La Mã dùng "## ", mục số 1, 2, 3 dùng "### ", mục a, b, c dùng "#### "; ý liệt kê dùng "- "; bảng dùng cú pháp | cột | cột |.
+- Không in đậm cả đoạn văn. Không dùng đường kẻ ngang.
+- Trả về toàn bộ trong một lần, không giải thích, không lời chào, không hỏi lại.`;
+
+/* ---------------- Giới thiệu sách ---------------- */
+const BOOK_TYPES = ["Văn học Việt Nam","Văn học nước ngoài","Kỹ năng sống – Phát triển bản thân","Hướng nghiệp – Chọn ngành","Khoa học – Công nghệ","Lịch sử – Danh nhân","Sách tham khảo – Ôn thi","Ngoại ngữ","Tra cứu"];
+
+const BOOK_SCRIPTS = [
+ {id:"s5",ten:"Câu hỏi mở màn",mo:"Câu hỏi – bí mật – hé lộ – giá trị – lời mời. Hợp mọi thể loại.",
+  khung:"5 nhịp: (1) một câu hỏi chạm đúng vấn đề của người đọc; (2) gợi một bí mật trong sách mà không nói hết; (3) hé lộ một chi tiết đắt; (4) nói rõ người đọc nhận được gì; (5) lời mời đến thư viện mượn sách, có vị trí sách."},
+ {id:"chitiet",ten:"Một chi tiết đắt",mo:"Mở thẳng bằng chi tiết đáng nhớ nhất, rồi vì sao nó đáng nhớ.",
+  khung:"Câu đầu là chi tiết đắt nhất (kể như một cảnh). Tiếp theo: vì sao chi tiết này đáng nhớ; nó liên quan gì tới đời sống học sinh THPT; dừng đúng điểm cắt; lời mời."},
+ {id:"truocsau",ten:"Trước – sau khi đọc",mo:"Đặt suy nghĩ trước khi đọc cạnh suy nghĩ sau khi đọc.",
+  khung:"Phần 1: một suy nghĩ phổ biến của học sinh trước khi đọc. Phần 2: cuốn sách thay đổi suy nghĩ đó thế nào (chỉ dựa trên chi tiết được cung cấp). Phần 3: một việc nhỏ người đọc làm được ngay. Lời mời."},
+ {id:"huongnghiep",ten:"Sách mở cửa nghề nghiệp",mo:"Gắn cuốn sách với ngành nghề, năng lực, câu hỏi chọn ngành.",
+  khung:"Mở bằng một băn khoăn chọn ngành có thật của học sinh lớp 10–12. Cuốn sách giúp hiểu gì về nghề, về bản thân. Gợi 2–3 câu hỏi tự vấn để người đọc mang theo khi đọc. Lời mời; có thể gợi ý trao đổi với giáo viên phụ trách hướng nghiệp."},
+ {id:"trich",ten:"Một câu trích – một suy ngẫm",mo:"Chỉ dùng khi đã có câu trích nguyên văn và số trang.",need:"trich",
+  khung:"Mở bằng câu trích nguyên văn (giữ nguyên từng chữ, ghi số trang). Một suy ngẫm ngắn gắn với học sinh. Bối cảnh của câu trích trong sách (chỉ theo chi tiết được cung cấp). Lời mời."},
+ {id:"vande",ten:"Nhiều sách cho một vấn đề",mo:"Gom 3–5 cuốn cùng giải quyết một vấn đề.",many:true,
+  khung:"Mở bằng vấn đề người đọc đang gặp. Mỗi cuốn: tên sách – tác giả – một ý giá trị nhất (đúng như danh sách). Gợi ý nên đọc cuốn nào trước. Lời mời."},
+ {id:"thumuc",ten:"Giới thiệu chuẩn thư mục",mo:"Kiểu truyền thống: thông tin xuất bản, tóm tắt, giá trị, vị trí.",
+  khung:"Đoạn 1: thông tin thư mục (tên sách, tác giả, nhà xuất bản, năm, ký hiệu xếp giá). Đoạn 2: tóm tắt nội dung theo chi tiết được cung cấp. Đoạn 3: giá trị và đối tượng nên đọc. Đoạn 4: vị trí sách."}
+];
+
+const BOOK_OUTS = [
+ {id:"fb",ten:"Bài đăng Facebook",mo:"180–250 chữ, 3–5 hashtag.",yc:"Bài đăng Facebook của thư viện, 180–250 chữ, chia đoạn ngắn 1–3 câu, câu đầu là câu móc (không phải lời chào, không phải tên sách). Thông tin thư mục đặt ở cuối. Cuối bài 3–5 hashtag tiếng Việt không dấu."},
+ {id:"cot",ten:"Giới thiệu dưới cờ",mo:"Văn nói, khoảng 2 phút (250–300 chữ).",yc:"Lời giới thiệu sách đọc dưới cờ hoặc trên loa phát thanh, khoảng 2 phút (250–300 chữ), văn nói tự nhiên, câu ngắn, có chỗ ngắt nghỉ ghi [ngừng], xưng hô với toàn trường."},
+ {id:"zalo",ten:"Tin nhắn nhóm lớp",mo:"Dưới 100 chữ, gửi Zalo nhóm GVCN – phụ huynh.",yc:"Tin nhắn ngắn dưới 100 chữ gửi nhóm Zalo lớp (giáo viên chủ nhiệm, phụ huynh, học sinh), lịch sự, có tên sách và vị trí mượn, không dùng hashtag."},
+ {id:"poster",ten:"Chữ cho poster",mo:"Tiêu đề, câu móc, lời mời – chuyển thẳng sang Poster AI.",target:"poster",yc:"Chữ cho poster giới thiệu sách, trả lời ĐÚNG 5 dòng theo mẫu:\n[Tiêu đề] tối đa 7 chữ\n[Tên sách] đúng tên sách\n[Câu móc] tối đa 16 chữ\n[Lời mời] tối đa 10 chữ\n[Vị trí sách] đúng vị trí được cung cấp"},
+ {id:"bookmark",ten:"Bookmark",mo:"Mặt trước câu móc, mặt sau thông tin.",yc:"Nội dung bookmark: MẶT TRƯỚC: một câu móc tối đa 18 chữ. MẶT SAU: tên sách, tác giả, ký hiệu xếp giá, vị trí, một câu mời mượn."},
+ {id:"video",ten:"Kịch bản video 60 giây",mo:"Chia cảnh, chuyển thẳng sang Video ngắn.",target:"video",yc:"Ý tưởng video 60 giây: 6 ý theo thứ tự (mỗi ý 1–2 câu), mỗi ý ghi rõ hình ảnh gợi ý và câu lời đọc. Chỉ dùng chi tiết được cung cấp."}
+];
+
+const BOOK_RULES = `Bạn là người làm thư viện trường trung học phổ thông ở Việt Nam, giỏi kể chuyện, đang viết nội dung giới thiệu sách cho học sinh 15–18 tuổi.
+MỤC TIÊU: người đọc muốn mở cuốn sách ra, không phải nghe tóm tắt.
+QUY TẮC BẮT BUỘC
+1. Chỉ dùng đúng các chi tiết về nội dung sách được cung cấp. KHÔNG tự thêm tình tiết, nhân vật, câu trích, số trang, giải thưởng, số bản bán ra. Ý nào thiếu dữ kiện thì bỏ qua, không đoán.
+2. Câu trích (nếu có) phải giữ nguyên từng chữ.
+3. Không kể hết. Dừng ở điểm cắt được cung cấp.
+4. Không mở đầu bằng: "Xin chào các bạn", "Hôm nay thư viện xin giới thiệu", "Cuốn sách ... là một cuốn sách hay". Câu đầu phải là câu hỏi, tình huống hoặc chi tiết.
+5. Tiếng Việt chuẩn chính tả, giọng gần gũi nhưng không sáo rỗng, không dùng biểu tượng cảm xúc (trừ khi sản phẩm là bài Facebook: tối đa 3 biểu tượng).
+6. Chỉ trả về sản phẩm, không giải thích, không đưa nhiều phương án.`;
+
+const BOOK_CHECK = ["Câu đầu là câu hỏi, tình huống hoặc chi tiết, không phải lời chào","Mọi chi tiết về sách đều có trong phần bạn đã nhập (AI không tự thêm)","Câu trích (nếu có) đúng từng chữ so với sách, có số trang","Tên sách, tác giả, nhà xuất bản, ký hiệu xếp giá chính xác","Có vị trí sách và lời mời đến thư viện","Không lộ hết kết thúc của sách"];
+
+/* ---------------- Poster ---------------- */
+const STYLES = [
+ {id:"sukien",ten:"Sự kiện thư viện",mo:"Thông báo ngày hội, tuần lễ đọc sách, cuộc thi.",ratio:"2:3",
+  style:"poster sự kiện học đường hiện đại, minh họa 3D mềm, màu tươi sáng nhưng sang, bố cục rõ ràng, nhiều khoảng thở",
+  layout:"tiêu đề lớn ở 1/3 trên; hình minh họa ở giữa; ba hoạt động xếp thành ba khối nhỏ có biểu tượng; thời gian và địa điểm trong một dải ngang phía dưới",
+  slots:[["Tiêu đề",8,"VD: Tuần lễ Đọc sách hướng nghiệp"],["Khẩu hiệu",14,""],["Hoạt động 1",7,""],["Hoạt động 2",7,""],["Hoạt động 3",7,""],["Thời gian",10,"VD: 10–14/11/2026"],["Địa điểm",8,"VD: Thư viện trường"]]},
+ {id:"sach",ten:"Sách nổi bật",mo:"Giới thiệu một cuốn sách, có bìa sách và câu móc.",ratio:"4:5",
+  style:"poster giới thiệu sách tinh tế, ánh sáng ấm, chiều sâu điện ảnh, cuốn sách là tâm điểm",
+  layout:"cuốn sách (bìa trơn hoặc theo ảnh đính kèm) đặt chéo ở giữa, ánh sáng hắt lên; tiêu đề phía trên; câu móc ngay dưới sách; lời mời và vị trí sách ở dưới cùng",
+  slots:[["Tiêu đề",7,""],["Tên sách",12,""],["Câu móc",16,""],["Lời mời",10,""],["Vị trí sách",10,""]]},
+ {id:"info",ten:"Infographic 5 ý",mo:"Mẹo đọc, kỹ năng tra cứu, nội quy thư viện.",ratio:"2:3",
+  style:"infographic 3D tối giản, biểu tượng khối tròn mềm, nền sáng, chữ rõ ràng dễ đọc",
+  layout:"tiêu đề ở trên; năm ý xếp dọc, mỗi ý một biểu tượng 3D nhỏ bên trái và một dòng chữ ngắn bên phải; khoảng cách đều",
+  slots:[["Tiêu đề",8,""],["Ý 1",8,""],["Ý 2",8,""],["Ý 3",8,""],["Ý 4",8,""],["Ý 5",8,""]]},
+ {id:"trich",ten:"Trích dẫn hay",mo:"Một câu trích, nền màu nước nhẹ.",ratio:"4:5",
+  style:"tranh màu nước nhẹ nhàng, giấy có vân, nhiều khoảng trắng, cảm giác yên tĩnh",
+  layout:"câu trích ở giữa, cỡ chữ lớn, căn giữa; tên tác giả và nguồn nhỏ bên dưới; một chi tiết minh họa nhỏ ở góc",
+  slots:[["Câu trích",30,"Chép đúng nguyên văn"],["Tác giả – nguồn",12,""],["Lời mời",10,""]]},
+ {id:"thongbao",ten:"Thông báo nhanh",mo:"Lịch mở cửa, thay đổi quy định, nhắc trả sách.",ratio:"1:1",
+  style:"thiết kế đồ họa phẳng tối giản, mảng màu lớn, một hình minh họa đơn giản",
+  layout:"tiêu đề rất lớn chiếm nửa trên; nội dung chính một đến hai dòng; thời gian trong khung nổi bật",
+  slots:[["Tiêu đề",6,""],["Nội dung chính",20,""],["Thời gian",10,""]]},
+ {id:"huongnghiep",ten:"Sách và hướng nghiệp",mo:"Gợi ý sách theo nhóm ngành cho học sinh 10–12.",ratio:"2:3",
+  style:"poster hướng nghiệp hiện đại, minh họa 3D, học sinh đứng trước những cánh cửa mở ra các nghề nghiệp, cảm hứng tương lai",
+  layout:"tiêu đề phía trên; hình minh họa ở giữa; ba cuốn sách gợi ý xếp ngang, mỗi cuốn có tên ngắn bên dưới; lời kêu gọi ở dưới",
+  slots:[["Tiêu đề",8,""],["Nhóm ngành",8,"VD: Khối ngành Sức khỏe"],["Sách 1",8,""],["Sách 2",8,""],["Sách 3",8,""],["Lời kêu gọi",10,""]]},
+ {id:"clb",ten:"Tuyển thành viên câu lạc bộ",mo:"Câu lạc bộ đọc sách, đội cộng tác viên thư viện.",ratio:"4:5",
+  style:"poster tuyển thành viên trẻ trung, năng động, minh họa 3D nhóm học sinh",
+  layout:"tiêu đề lớn; nhóm học sinh ở giữa; ba quyền lợi dạng gạch đầu dòng; cách đăng ký ở dưới cùng",
+  slots:[["Tiêu đề",8,""],["Quyền lợi 1",8,""],["Quyền lợi 2",8,""],["Quyền lợi 3",8,""],["Cách đăng ký",12,""]]}
+];
+
+const SETTINGS = [
+ ["Phòng đọc thư viện trường","phòng đọc thư viện trường THPT Việt Nam, kệ sách gỗ nhiều tầng, bàn đọc dài, cửa sổ lớn có ánh sáng tự nhiên"],
+ ["Góc đọc mở ở hành lang","góc đọc mở ở hành lang trường, kệ sách thấp, ghế lười, cây xanh"],
+ ["Lớp học có tủ sách lớp","lớp học THPT Việt Nam có tủ sách lớp ở cuối phòng, bảng xanh, bàn ghế học sinh"],
+ ["Sân trường","sân trường THPT Việt Nam rộng, hàng cây xanh, dãy lớp học phía sau"],
+ ["Sân khấu sự kiện","sân khấu sự kiện ngoài trời ở sân trường, phông nền, học sinh ngồi dưới"],
+ ["Thư viện số, phòng máy","góc thư viện số với máy tính, màn hình tra cứu, máy quét mã QR"],
+ ["Thế giới bước ra từ sách","những hình ảnh kỳ ảo bay ra từ trang sách đang mở"],
+ ["Nền trơn (infographic)","nền trơn sáng màu, không có bối cảnh cụ thể"]
+];
+const OCCASIONS = [
+ ["Không gắn dịp",""],["Khai giảng năm học mới","không khí khai giảng tháng 9, cờ hoa, học sinh lớp 10 mới vào trường"],
+ ["Ngày Chuyển đổi số quốc gia 10/10","yếu tố công nghệ, thiết bị số, biểu tượng dữ liệu nhẹ nhàng"],
+ ["Ngày Phụ nữ Việt Nam 20/10","hoa và sắc hồng nhẹ, tôn vinh phụ nữ"],
+ ["Ngày Nhà giáo Việt Nam 20/11","hoa tri ân, thầy cô và học trò"],
+ ["Tết Nguyên đán","hoa mai vàng, câu đối đỏ, không khí Tết"],
+ ["Ngày Quốc tế Phụ nữ 8/3","hoa tươi, sắc ấm"],
+ ["Ngày thành lập Đoàn 26/3","sắc xanh Đoàn, tinh thần thanh niên tình nguyện"],
+ ["Ngày Sách và Văn hóa đọc Việt Nam 21/4","sách mở, hội sách, không khí lễ hội đọc"],
+ ["Mùa ôn thi tốt nghiệp THPT","bàn học, đề cương, ánh đèn bàn, tập trung nhưng không căng thẳng"],
+ ["Hướng nghiệp – chọn ngành","những cánh cửa nghề nghiệp, biểu tượng ngành nghề"],
+ ["Mùa hè đọc sách","nắng hè, hoa phượng, kỳ nghỉ"]
+];
+const EXTRAS = [["Không có",""],["Nhóm học sinh THPT","một nhóm 3–4 học sinh THPT nam nữ"],["Cả lớp","đông học sinh một lớp THPT"],["Thầy cô giáo","thầy cô giáo THPT"],["Phụ huynh và con","phụ huynh cùng con tuổi THPT"]];
+const MOODS = [["Ấm áp, nắng vàng","ánh nắng vàng ấm, bầu không khí thân thiện"],["Tươi sáng","màu sắc tươi sáng, rõ ràng, năng lượng tích cực"],["Yên tĩnh, tập trung","ánh sáng dịu, không khí yên tĩnh"],["Kỳ ảo","ánh sáng lấp lánh nhẹ, cảm giác kỳ diệu"],["Năng động","chuyển động, góc nghiêng, màu tương phản"],["Hoài niệm","tông màu ấm trầm, hoài niệm"]];
+const SHOTS = [["Toàn cảnh","góc toàn cảnh"],["Trung cảnh","trung cảnh ngang tầm mắt"],["Cận cảnh","cận cảnh khuôn mặt và cuốn sách"],["Từ trên xuống","góc nhìn từ trên xuống"],["Góc thấp","góc thấp nhìn lên, tạo cảm giác lớn lao"],["Nghiêng 3/4","góc nghiêng 3/4"]];
+
+const IMG_RULES = `QUY TẮC VỀ CHỮ: chỉ viết đúng những dòng chữ nằm trong ngoặc kép ở mục CHỮ TRÊN POSTER, viết đúng chính tả tiếng Việt, đủ dấu, không thêm bất kỳ chữ nào khác. Không vẽ chữ giả trên gáy sách, biển hiệu, màn hình; để trơn hoặc mờ. Không vẽ logo, mã QR, chữ ký giả.
+BẢN ĐỊA HÓA VIỆT NAM: con người là người Việt Nam, nét mặt Á Đông; học sinh trung học phổ thông 15–18 tuổi, dáng vẻ phù hợp lứa tuổi, trang phục kín đáo; trường học, đồ vật, cảnh vật đúng bối cảnh Việt Nam.
+TRÁNH: chữ méo, sai dấu, chữ lạ; thừa hoặc thiếu ngón tay; khuôn mặt biến dạng; bố cục rối; hiệu ứng quá chói.`;
+
+const POSTER_CHECK = ["Mọi dòng chữ tiếng Việt đúng chính tả, đủ dấu","Không có chữ lạ, chữ méo ở gáy sách, biển hiệu, màn hình","Tay, ngón tay, khuôn mặt nhân vật tự nhiên","Ngày, giờ, địa điểm khớp với kế hoạch đã duyệt","Mã QR quét thử được và mở đúng trang","Logo trường đúng, không méo, không mờ","Đã được Ban Giám hiệu hoặc người phụ trách duyệt trước khi đăng"];
+
+/* ---------------- Video ---------------- */
+const VTYPES = [
+ {id:"sach",ten:"Giới thiệu sách – 60 giây",dur:60,sc:6,mo:"Trailer cho một cuốn sách, móc tò mò ở 3 giây đầu.",
+  khung:"Cảnh 1 móc tò mò bằng câu hỏi hoặc tình huống; các cảnh giữa hé lộ chi tiết đắt và giá trị; cảnh cuối mời đến thư viện, có vị trí sách.",
+  hint:"Ghi: tên sách, tác giả, vấn đề sách giải quyết, chi tiết đắt, điểm dừng, vị trí sách. Dùng nút Chuyển sang Video ngắn ở mục Giới thiệu sách để điền tự động."},
+ {id:"thuvien",ten:"Giới thiệu thư viện",dur:75,sc:7,mo:"Cho học sinh lớp 10 mới vào trường: không gian, dịch vụ, cách mượn.",
+  khung:"Mở bằng một khoảnh khắc đẹp của thư viện; giới thiệu các khu vực; cách làm thẻ, mượn trả; hoạt động nổi bật; lời mời.",
+  hint:"Ghi: giờ mở cửa, các khu vực, cách làm thẻ, số sách được mượn, thời hạn, hoạt động nổi bật."},
+ {id:"sukien",ten:"Thông báo sự kiện",dur:30,sc:4,mo:"Video ngắn quảng bá một sự kiện thư viện.",
+  khung:"Cảnh 1 tên sự kiện gây chú ý; cảnh giữa các hoạt động chính; cảnh cuối thời gian, địa điểm, lời kêu gọi.",
+  hint:"Ghi: tên sự kiện, thời gian, địa điểm, 2–3 hoạt động chính, quyền lợi khi tham gia."},
+ {id:"huongdan",ten:"Hướng dẫn tra cứu, thư viện số",dur:60,sc:6,mo:"Hướng dẫn từng bước tra cứu tài liệu hoặc dùng thư viện số.",
+  khung:"Mỗi cảnh là một bước, có chữ trên màn hình ghi số bước; cảnh cuối nhắc lại các bước.",
+  hint:"Ghi đúng từng bước thao tác, tên phần mềm hoặc trang web, tên nút bấm."},
+ {id:"bantin",ten:"Bản tin thư viện tháng",dur:90,sc:7,mo:"Điểm lại hoạt động trong tháng, sách mới, bạn đọc tiêu biểu.",
+  khung:"Mở bằng con số nổi bật nhất tháng; các tin chính; sách mới; bạn đọc tiêu biểu; lịch tháng sau.",
+  hint:"Ghi: số liệu tháng (lượt mượn, sách mới), hoạt động đã tổ chức, tên bạn đọc tiêu biểu (đã được đồng ý), lịch tháng sau."}
+];
+const LOOKS = [["Chân thực như quay thật","phong cách điện ảnh chân thực, ánh sáng tự nhiên, ống kính 35mm"],["3D hoạt hình ấm áp","phong cách 3D hoạt hình ấm áp, chất liệu mềm, ánh sáng dịu"],["Minh họa phẳng hiện đại","minh họa phẳng hiện đại, mảng màu gọn, đường nét sạch"],["Màu nước nhẹ nhàng","tranh màu nước nhẹ nhàng, giấy có vân"]];
+const MUSIC = ["Piano nhẹ nhàng, truyền cảm","Lo-fi thư giãn","Acoustic tươi sáng","Nhạc điện tử sôi động, nhịp nhanh","Nhạc nền điện ảnh, hồi hộp"];
+
+const VIDEO_CHECK = ["3 giây đầu có câu móc hoặc hình ảnh gây tò mò","Lời đọc khớp với chữ trên màn hình, đúng chính tả","Không có chữ lạ, chữ méo trong các khung hình AI","Nhạc nền có bản quyền hoặc lấy từ thư viện nhạc miễn phí của CapCut","Hình ảnh học sinh thật (nếu có) đã được sự đồng ý","Cảnh kết có tên, logo thư viện đúng","Đã được người phụ trách duyệt trước khi đăng"];
+
+const CAPCUT = ["Tạo dự án mới đúng khổ đã chọn; nhập lần lượt các đoạn video của từng cảnh theo thứ tự.","Dán toàn bộ lời đọc vào mục Văn bản, chọn Chuyển văn bản thành giọng nói (hoặc thu âm giọng thật); căn từng đoạn lời đọc khớp với cảnh.","Bật Tự động tạo phụ đề, rà lỗi chính tả từng dòng.","Thêm chữ trên màn hình theo từng cảnh; dùng một phông chữ có đủ dấu tiếng Việt.","Thêm nhạc nền, giảm âm lượng nhạc còn khoảng 15–25% để nghe rõ lời đọc.","Thêm cảnh kết: tên thư viện, logo, lời mời.","Xem lại toàn bộ trên điện thoại, rồi xuất video 1080p."];
+
+/* ---------------- Lịch văn hóa đọc ---------------- */
+const MONTHS = [
+ [8,"Tháng 8",["Chuẩn bị kho sách, SGK","Xây dựng kế hoạch năm học"],[["Soạn kế hoạch năm học","doc:kh_namhoc"]]],
+ [9,"Tháng 9",["Khai giảng; giới thiệu thư viện cho lớp 10","Làm thẻ thư viện"],[["Video giới thiệu thư viện","video:thuvien"],["Poster khai giảng","poster:Khai giảng năm học mới"]]],
+ [10,"Tháng 10",["Ngày Chuyển đổi số quốc gia 10/10","Ngày Phụ nữ Việt Nam 20/10"],[["Kế hoạch chuyển đổi số","doc:kh_cds"],["Poster 20/10","poster:Ngày Phụ nữ Việt Nam 20/10"]]],
+ [11,"Tháng 11",["Ngày Nhà giáo Việt Nam 20/11","Tuần lễ đọc sách hướng nghiệp"],[["Kế hoạch sự kiện","doc:kh_sukien"],["Poster hướng nghiệp","poster:Hướng nghiệp – chọn ngành"]]],
+ [12,"Tháng 12",["Sơ kết học kỳ I","Kiểm kê giữa năm"],[["Báo cáo sơ kết","doc:bc_hk1"]]],
+ [1,"Tháng 1",["Sách ngày Tết","Bổ sung tài liệu học kỳ II"],[["Kế hoạch bổ sung","doc:kh_bosung"],["Poster Tết","poster:Tết Nguyên đán"]]],
+ [2,"Tháng 2",["Tết Nguyên đán","Thử thách đọc học kỳ II"],[["Kế hoạch văn hóa đọc","doc:kh_vhd"]]],
+ [3,"Tháng 3",["Quốc tế Phụ nữ 8/3","Ngày thành lập Đoàn 26/3"],[["Poster 26/3","poster:Ngày thành lập Đoàn 26/3"]]],
+ [4,"Tháng 4",["Ngày Sách và Văn hóa đọc Việt Nam 21/4"],[["Kế hoạch 21/4","doc:kh_214"],["Poster 21/4","poster:Ngày Sách và Văn hóa đọc Việt Nam 21/4"]]],
+ [5,"Tháng 5",["Ôn thi tốt nghiệp THPT","Tổng kết năm học, kiểm kê"],[["Báo cáo tổng kết","doc:bc_tongket"],["Kế hoạch kiểm kê","doc:kh_kiemke"]]],
+ [6,"Tháng 6–7",["Mùa hè đọc sách","Chuẩn bị đạt chuẩn thư viện"],[["Kế hoạch đạt chuẩn","doc:kh_chuan"],["Poster hè","poster:Mùa hè đọc sách"]]]
+];
+
+const CHAR_PRESETS = [
+ {id:"c1",ten:"Cô Thủ Thư",mota:"nữ nhân viên thư viện người Việt khoảng 30 tuổi, tóc đen búi gọn, đeo kính gọng mảnh, nụ cười thân thiện",trang:"áo sơ mi trắng, chân váy xanh navy, thẻ tên màu vàng",tinh:"điềm đạm, hiểu học sinh"},
+ {id:"c2",ten:"Thầy Thủ Thư",mota:"nam nhân viên thư viện người Việt khoảng 35 tuổi, tóc ngắn gọn gàng, dáng cao vừa",trang:"áo sơ mi xanh nhạt, quần tây sẫm màu, thẻ tên màu vàng",tinh:"vui tính, am hiểu công nghệ"},
+ {id:"c3",ten:"An – bạn đọc lớp 11",mota:"nữ sinh lớp 11 người Việt, tóc dài buộc đuôi ngựa, đeo balo, ôm một cuốn sách",trang:"đồng phục học sinh của trường",tinh:"tò mò, thích khám phá"}
+];
+</script>
+<script>
+/* QR Code Generator for JavaScript 1.4.4 – Copyright (c) 2009 Kazuhiko Arase – MIT license (http://www.opensource.org/licenses/mit-license.php). "QR Code" is a registered trademark of DENSO WAVE INCORPORATED. */
+var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1})},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(){var t=n("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});
+qrcode.stringToBytes=qrcode.stringToBytesFuncs["UTF-8"];
+</script>
+<script>
+"use strict";
+/* ============================== TIỆN ÍCH ============================== */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const KEY = "tvntt2:";
+let STORAGE_OK = true;
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(KEY+k); return v == null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(KEY+k, JSON.stringify(v)); return true; }catch(e){ if(STORAGE_OK) toast("Không lưu được vào trình duyệt. Hãy tải file sao lưu."); return false; } },
+  del(k){ try{ localStorage.removeItem(KEY+k); }catch(e){} }
+};
+const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const words = s => (String(s||"").trim().match(/\S+/g)||[]).length;
+function toast(t){ const e=$("toast"); e.textContent=t; e.classList.add("on"); clearTimeout(toast.t); toast.t=setTimeout(()=>e.classList.remove("on"),2400); }
+function msg(id, t, err){ const e=$(id); if(!e) return; e.textContent=t||""; e.classList.toggle("err", !!err); }
+function undim(...ids){ ids.forEach(i=>$(i)&&$(i).classList.remove("dim")); }
+async function copyStr(s){
+  try{ await navigator.clipboard.writeText(s); return true; }
+  catch(e){ const t=document.createElement("textarea"); t.value=s; t.style.cssText="position:fixed;opacity:0"; document.body.appendChild(t); t.select(); let ok=false; try{ ok=document.execCommand("copy"); }catch(_){} t.remove(); return ok; }
+}
+async function copyEl(id){
+  const el=$(id); const v=(el.value!==undefined?el.value:el.innerText)||"";
+  if(!v.trim()){ toast("Chưa có nội dung để sao chép"); return false; }
+  const ok=await copyStr(v); toast(ok?"Đã sao chép":"Không sao chép được. Hãy bôi đen rồi nhấn Ctrl+C"); return ok;
+}
+function download(blob, name){ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},800); }
+function slug(s){ return String(s||"van-ban").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").replace(/[^A-Za-z0-9]+/g,"_").replace(/^_|_$/g,"").slice(0,60) || "van_ban"; }
+const todayISO = () => { const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const fmtDate = iso => { if(!iso) return ""; const [y,m,d]=iso.slice(0,10).split("-"); return `${d}/${m}/${y}`; };
+
+/* ============================== TRẠNG THÁI ============================== */
+const DEF_PROFILE = {chuQuan:"SỞ GIÁO DỤC VÀ ĐÀO TẠO ........", ten:"TRƯỜNG THPT NTT2", kyHieu:"NTT2", diaDanh:"", namHoc:"2026-2027", nguoiPT:"", ht:"", pht:"", quyMo:"", soLieu:""};
+const DEF_ID = {name:"Thư viện Trường THPT NTT2", c1:"#13294B", c2:"#C9A227", c3:"#FFFFFF", logo:"", dongPhuc:"", vung:"", khac:""};
+const S = {
+  profile: Object.assign({}, DEF_PROFILE, store.get("profile", {})),
+  id: Object.assign({}, DEF_ID, store.get("identity", {})),
+  chars: store.get("chars", null) || CHAR_PRESETS.map(c=>({...c})),
+  places: store.get("places", []),
+  legal: store.get("legal", LEGAL_DEFAULT),
+  docs: store.get("docs", []),
+  books: store.get("books", []),
+  settings: Object.assign({ai:"chatgpt"}, store.get("settings", {}))
+};
+function saveAll(){ store.set("profile",S.profile); store.set("identity",S.id); store.set("chars",S.chars.map(({_edit,...c})=>c)); store.set("places",S.places.map(({_edit,...c})=>c)); }
+
+function schoolName(){
+  const keep = /^(THPT|THCS|TH|PT|DTNT|PTDTNT|GDTX|GDNN|TTGDTX)$/;
+  return String(S.profile.ten||"").trim().split(/\s+/).map(w=>{
+    if(w!==w.toLowerCase() && w===w.toUpperCase() && (keep.test(w) || /\d/.test(w))) return w;
+    const l=w.toLocaleLowerCase("vi"); return l.charAt(0).toLocaleUpperCase("vi")+l.slice(1);
+  }).join(" ");
+}
+function year2(){ const m=String(S.profile.namHoc||"").match(/(\d{4})\D+(\d{4})/); return m?m[2]:String(new Date().getFullYear()); }
+
+/* ============================== ĐIỀU HƯỚNG ============================== */
+function go(tab){
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on", b.dataset.tab===tab));
+  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on", p.id==="p_"+tab));
+  window.scrollTo({top:0});
+  if(tab==="home") renderHome();
+  if(tab==="hoanthien") drawFin();
+}
+$("nav").addEventListener("click", e=>{ const b=e.target.closest("button[data-tab]"); if(b) go(b.dataset.tab); });
+
+const AI = {chatgpt:["ChatGPT","https://chatgpt.com/"], gemini:["Gemini","https://gemini.google.com/app"], claude:["Claude","https://claude.ai/new"]};
+function renderAIBars(){
+  document.querySelectorAll("[data-ai]").forEach(b=>{
+    const id=b.dataset.ai, only=(b.dataset.only||"chatgpt,gemini,claude").split(",");
+    let def=S.settings.ai; if(!only.includes(def)) def=only[0];
+    b.innerHTML = `<button class="btn pri" data-cp="${id}" data-site="${def}">Sao chép và mở ${AI[def][0]}</button>`
+      + only.filter(k=>k!==def).map(k=>`<button class="btn" data-cp="${id}" data-site="${k}">Sao chép và mở ${AI[k][0]}</button>`).join("")
+      + `<button class="btn ghost" data-cp="${id}">Chỉ sao chép</button>`;
+  });
+}
+document.addEventListener("click", async e=>{
+  const b=e.target.closest("[data-cp]");
+  if(b){ const ok=await copyEl(b.dataset.cp); if(ok && b.dataset.site) window.open(AI[b.dataset.site][1], "_blank", "noopener"); return; }
+  const c=e.target.closest("[data-copy]"); if(c) copyEl(c.dataset.copy);
+});
+
+function renderChecks(box, list){ $(box).innerHTML = list.map((t,i)=>`<label><input type="checkbox" id="${box}_${i}"> ${esc(t)}</label>`).join(""); }
+function fillSelect(id, items, withNone){ $(id).innerHTML = (withNone?`<option value="">${withNone}</option>`:"") + items.map((x,i)=>`<option value="${i}">${esc(Array.isArray(x)?x[0]:x.ten||x)}</option>`).join(""); }
+
+/* Lưu nháp từng thẻ */
+function panelSave(panel, key){
+  const o={}; $(panel).querySelectorAll("input[id],select[id],textarea[id]").forEach(e=>{ if(e.type==="file") return; o[e.id]=e.type==="checkbox"?e.checked:e.value; });
+  store.set(key, o);
+}
+function panelLoad(panel, key, first, after){
+  const o=store.get(key,null); if(!o) return false;
+  const set=id=>{ const e=$(id); if(!e || !(id in o)) return; if(e.type==="checkbox") e.checked=!!o[id]; else e.value=o[id]; };
+  (first||[]).forEach(id=>{ set(id); after && after(id); });
+  Object.keys(o).forEach(id=>{ if(!(first||[]).includes(id)) set(id); });
+  return true;
+}
+function autoDraft(panel, key){ let t; $(panel).addEventListener("input", ()=>{ clearTimeout(t); t=setTimeout(()=>panelSave(panel,key),500); }); $(panel).addEventListener("change", ()=>panelSave(panel,key)); }
+function hidden(panel, id){ const i=document.createElement("input"); i.type="hidden"; i.id=id; $(panel).appendChild(i); return i; }
+
+/* ============================== BẮT ĐẦU ============================== */
+function renderHome(){
+  const m=new Date().getMonth()+1, cur = m===7 ? 6 : m;
+  $("months").innerHTML = MONTHS.map(([mm,name,items,acts])=>`<div class="month${mm===cur?" now":""}"><h4>${name}${mm===cur?"<small>Tháng này</small>":""}</h4><ul>${items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul><div class="bar" style="margin-top:4px">${acts.map(([t,a])=>`<button class="btn sm" data-act="${esc(a)}">${esc(t)}</button>`).join("")}</div></div>`).join("");
+  $("homeStat").innerHTML = `<div><b>${S.docs.length}</b><span>văn bản đã lưu</span></div><div><b>${S.books.length}</b><span>sách đã lưu</span></div><div><b>${DOCS.length-1}</b><span>mẫu văn bản</span></div><div><b>${STYLES.length}</b><span>loại poster</span></div>`;
+}
+$("months").addEventListener("click", e=>{
+  const b=e.target.closest("[data-act]"); if(!b) return;
+  const i=b.dataset.act.indexOf(":"), k=b.dataset.act.slice(0,i), v=b.dataset.act.slice(i+1);
+  if(k==="doc"){ $("docSel").value=v; onDocSel(); go("vanban"); }
+  else if(k==="poster"){ const j=OCCASIONS.findIndex(o=>o[0]===v); if(j>=0) $("psOcc").value=j; go("poster"); }
+  else if(k==="video"){ $("vType").value=v; onVType(); go("video"); }
+});
+
+/* ============================== HỒ SƠ ============================== */
+const HMAP = {h_chuquan:"chuQuan",h_ten:"ten",h_kyhieu:"kyHieu",h_diadanh:"diaDanh",h_namhoc:"namHoc",h_nguoipt:"nguoiPT",h_ht:"ht",h_pht:"pht",h_quymo:"quyMo",h_solieu:"soLieu"};
+const IMAP = {id_name:"name",id_c1:"c1",id_c2:"c2",id_c3:"c3",id_dongphuc:"dongPhuc",id_vung:"vung",id_khac:"khac"};
+function fillHoso(){ for(const k in HMAP) $(k).value=S.profile[HMAP[k]]||""; for(const k in IMAP) $(k).value=S.id[IMAP[k]]||""; }
+function readHoso(){
+  for(const k in HMAP) S.profile[HMAP[k]]=$(k).value.trim();
+  for(const k in IMAP) S.id[IMAP[k]]=$(k).value.trim();
+  S.profile.chuQuan=S.profile.chuQuan.toLocaleUpperCase("vi"); S.profile.ten=S.profile.ten.toLocaleUpperCase("vi");
+  saveAll(); refreshBrand(); refreshProfSum();
+}
+$("p_hoso").addEventListener("change", e=>{ if(e.target.type!=="file") readHoso(); });
+$("btnHosoSave").onclick=()=>{ readHoso(); fillHoso(); toast("Đã lưu hồ sơ"); };
+function refreshBrand(){
+  const n=S.id.name||"Thư viện"; $("sbName").textContent=n; $("heroName").textContent=n;
+  $("heroYear").textContent="Năm học "+(S.profile.namHoc||""); document.title="Trợ lý "+n;
+  const h = S.id.logo ? `<img src="${S.id.logo}" alt="Logo">` : "TV";
+  $("sbLogo").innerHTML=h; $("id_logoPrev").innerHTML=h;
+}
+function shrinkImage(file, max, cb){
+  const r=new FileReader(); r.onload=()=>{ const img=new Image(); img.onload=()=>{ const k=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement("canvas"); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height); cb(c.toDataURL("image/png")); }; img.src=r.result; }; r.readAsDataURL(file);
+}
+$("id_logo").onchange=e=>{ const f=e.target.files[0]; if(!f) return; shrinkImage(f,400,d=>{ S.id.logo=d; saveAll(); refreshBrand(); toast("Đã cập nhật logo"); }); e.target.value=""; };
+$("btnLogoRm").onclick=()=>{ S.id.logo=""; saveAll(); refreshBrand(); };
+
+/* Nhân vật & bối cảnh riêng */
+function plistHtml(kind, x, i){
+  if(x._edit){
+    const f = kind==="ch"
+      ? [["ten","Tên gọi"],["mota","Ngoại hình (tuổi, dáng, tóc, nét mặt)"],["trang","Trang phục"],["tinh","Tính cách"]]
+      : [["ten","Tên bối cảnh"],["mota","Mô tả để AI vẽ (không gian, đồ vật, màu sắc, ánh sáng)"]];
+    return `<div class="pitem">${f.map(([k,l])=>`<label>${l}</label>${k==="mota"?`<textarea rows="2" data-f="${k}">${esc(x[k]||"")}</textarea>`:`<input data-f="${k}" value="${esc(x[k]||"")}">`}`).join("")}<div class="bar"><button class="btn sm pri" data-ps="${kind}:${i}">Lưu</button><button class="btn sm ghost" data-pc="${kind}:${i}">Huỷ</button></div></div>`;
+  }
+  return `<div class="pitem"><div class="top"><b>${esc(x.ten)}</b><span><button class="btn sm ghost" data-pe="${kind}:${i}">Sửa</button><button class="btn sm ghost danger" data-pd="${kind}:${i}">Xoá</button></span></div><p>${esc(x.mota)}${x.trang?"; "+esc(x.trang):""}</p></div>`;
+}
+function renderPList(kind){
+  const arr = kind==="ch"?S.chars:S.places, box=$(kind==="ch"?"chList":"seList");
+  box.innerHTML = arr.length ? arr.map((x,i)=>plistHtml(kind,x,i)).join("")
+    : `<p class="hint" style="margin:0">${kind==="ch"?"Chưa có nhân vật.":"Chưa có. Thêm phòng đọc, sân trường... đúng như thực tế để poster giống trường mình."}</p>`;
+}
+function onPList(e){
+  const b=e.target.closest("[data-pe],[data-pd],[data-ps],[data-pc]"); if(!b) return;
+  const [kind,i]=(b.dataset.pe||b.dataset.pd||b.dataset.ps||b.dataset.pc).split(":"); const arr=kind==="ch"?S.chars:S.places, x=arr[+i];
+  if(b.dataset.pe){ x._edit=true; }
+  else if(b.dataset.pd){ if(!confirm(`Xoá "${x.ten}"?`)) return; arr.splice(+i,1); }
+  else if(b.dataset.pc){ if(!x.ten) arr.splice(+i,1); else delete x._edit; }
+  else { b.closest(".pitem").querySelectorAll("[data-f]").forEach(f=>x[f.dataset.f]=f.value.trim()); if(!x.ten){ toast("Hãy nhập tên"); return; } delete x._edit; saveAll(); refreshCharSelects(); toast("Đã lưu"); }
+  saveAll(); renderPList(kind); refreshCharSelects();
+}
+$("chList").onclick=onPList; $("seList").onclick=onPList;
+$("btnChAdd").onclick=()=>{ S.chars.push({id:uid("c"),ten:"",mota:"",trang:"",tinh:"",_edit:true}); renderPList("ch"); };
+$("btnSeAdd").onclick=()=>{ S.places.push({id:uid("p"),ten:"",mota:"",_edit:true}); renderPList("se"); };
+function settingList(){ return S.places.filter(p=>p.ten&&!p._edit).map(p=>["Trường mình: "+p.ten, p.mota]).concat(SETTINGS); }
+function refreshCharSelects(){
+  const chs=S.chars.filter(c=>c.ten&&!c._edit);
+  ["psChar","vChar"].forEach(id=>{ const v=$(id).value; $(id).innerHTML=`<option value="">Không có nhân vật</option>`+chs.map(c=>`<option value="${esc(c.id)}">${esc(c.ten)}</option>`).join(""); if([...$(id).options].some(o=>o.value===v)) $(id).value=v; });
+  ["psSetting","vSetting"].forEach(id=>{ const v=$(id).value; fillSelect(id, settingList()); if(v && +v<$(id).options.length) $(id).value=v; });
+}
+const charById = id => S.chars.find(c=>c.id===id);
+function charDesc(c){ return c ? `${c.ten}: ${c.mota}${c.trang?"; trang phục: "+(c.trang==="đồng phục học sinh của trường"?(S.id.dongPhuc||"đồng phục học sinh THPT Việt Nam"):c.trang):""}${c.tinh?"; tính cách thể hiện qua nét mặt: "+c.tinh:""}` : ""; }
+function localeBlock(){
+  const a=[];
+  a.push("Đồng phục học sinh: "+(S.id.dongPhuc||"đồng phục học sinh THPT Việt Nam (áo sơ mi trắng)")+".");
+  if(S.id.vung) a.push("Vùng miền, cảnh vật: "+S.id.vung+".");
+  if(S.id.khac) a.push("Chi tiết đặc trưng của trường: "+S.id.khac+".");
+  return a.join(" ");
+}
+function paletteText(custom){ return custom ? custom : `màu nhận diện của thư viện: màu chính ${S.id.c1}, màu nhấn ${S.id.c2}, màu nền ${S.id.c3}`; }
+
+/* ============================== VĂN BẢN ============================== */
+let tyTouched=false;
+const curDoc = () => DOCS.find(d=>d.id===$("docSel").value) || DOCS[0];
+function docLoai(){ const t=curDoc(); if(t.other && $("o_loai")){ const [l,k]=$("o_loai").value.split("|"); return {loai:l,kh:k}; } return {loai:t.loai,kh:t.kh}; }
+function fillTpl(s){
+  return String(s||"").replace(/\{(\w+)\}/g,(m,k)=>{
+    if(k==="nam") return S.profile.namHoc||"[....]";
+    if(k==="y2") return year2();
+    if(k==="ten") return schoolName();
+    const e=$("x_"+k); return e && e.value.trim() ? e.value.trim() : "[....]";
+  });
+}
+const SIGNERS = {ht:["HIỆU TRƯỞNG"], kt:["KT. HIỆU TRƯỞNG","PHÓ HIỆU TRƯỞNG"], tv:["NHÂN VIÊN THƯ VIỆN"]};
+function signerName(k){ return k==="ht"?S.profile.ht : k==="kt"?S.profile.pht : S.profile.nguoiPT; }
+function onDocSel(){
+  const t=curDoc(); tyTouched=false;
+  $("docDesc").textContent=t.mota;
+  $("docOther").innerHTML = t.other ? `<label for="o_loai">Loại văn bản</label><select id="o_loai">${OTHER_TYPES.map(([a,b])=>`<option value="${a}|${b}">${a}</option>`).join("")}</select><label for="o_khung">Khung nội dung mong muốn <span class="opt">(mỗi dòng một mục lớn; để trống để AI tự đề xuất)</span></label><textarea id="o_khung" rows="4"></textarea>` : "";
+  $("docExtra").innerHTML = t.extra.map(f=>`<label for="x_${f.id}">${esc(f.label)}</label><input id="x_${f.id}" placeholder="${esc(f.ph||"")}">`).join("");
+  $("d_trichyeu").value = fillTpl(t.ty);
+  const k = t.signer==="staff"?"tv":"ht"; $("d_kycv").value=k; $("d_kyten").value=signerName(k)||"";
+  $("d_noinhan").value = fillTpl(t.nn);
+  refreshProfSum();
+}
+function refreshProfSum(){
+  const P=S.profile, miss=[];
+  if(!P.diaDanh) miss.push("địa danh"); if(!P.soLieu) miss.push("số liệu thư viện"); if(!P.quyMo) miss.push("quy mô trường"); if(/\.{3,}/.test(P.chuQuan)) miss.push("cơ quan chủ quản");
+  $("profSum").innerHTML = `Dùng hồ sơ: ${esc(schoolName())}, năm học ${esc(P.namHoc)}.` + (miss.length?` Còn thiếu: ${miss.join(", ")} – <a href="#" onclick="go('hoso');return false">bổ sung</a>.`:"");
+}
+$("docSel").onchange=onDocSel;
+$("d_trichyeu").addEventListener("input",()=>tyTouched=true);
+$("docExtra").addEventListener("input",()=>{ if(!tyTouched) $("d_trichyeu").value=fillTpl(curDoc().ty); });
+$("d_kycv").onchange=()=>{ $("d_kyten").value=signerName($("d_kycv").value)||""; };
+
+$("btnDocPrompt").onclick=()=>{
+  const t=curDoc(), P=S.profile, ht=$("d_hientrang").value.trim();
+  if(words(ht)<12){ msg("docMsg","Hãy mô tả hiện trạng cụ thể hơn (vài câu, có số liệu nếu có). AI chỉ viết tốt khi có dữ kiện thật.",true); $("d_hientrang").focus(); return; }
+  if(!$("d_trichyeu").value.trim()){ msg("docMsg","Hãy nhập trích yếu.",true); return; }
+  const ld=docLoai();
+  const extras=t.extra.map(f=>{ const v=$("x_"+f.id).value.trim(); return v?`- ${f.label}: ${v}`:""; }).filter(Boolean).join("\n");
+  const khung = t.other ? ($("o_khung").value.trim() || "(tự đề xuất khung phù hợp với loại văn bản, đánh số La Mã cho mục lớn)") : t.khung;
+  const p = [
+    DOC_RULES, "",
+    "DANH MỤC CĂN CỨ ĐƯỢC PHÉP TRÍCH DẪN", S.legal.split("\n").map(x=>x.trim()).filter(Boolean).map(x=>"- "+x).join("\n"), "",
+    "CĂN CỨ RIÊNG CỦA ĐƠN VỊ", $("d_cancu").value.trim() || "(không có)", "",
+    "THÔNG TIN ĐƠN VỊ",
+    `- Tên đơn vị: ${schoolName()} (trường trung học phổ thông)`,
+    `- Năm học: ${P.namHoc||"[....]"}`,
+    `- Quy mô: ${P.quyMo||"[chưa cung cấp]"}`,
+    `- Số liệu thư viện: ${P.soLieu||"[chưa cung cấp]"}`,
+    `- Người phụ trách thư viện: ${P.nguoiPT||"[....]"}`, "",
+    "VĂN BẢN CẦN VIẾT", `- Loại văn bản: ${ld.loai}`, `- Trích yếu: ${$("d_trichyeu").value.trim()}`, extras, "",
+    "HIỆN TRẠNG VÀ YÊU CẦU", ht, "",
+    $("d_them").value.trim() ? "YÊU CẦU THÊM\n"+$("d_them").value.trim()+"\n" : "",
+    "KHUNG NỘI DUNG BẮT BUỘC", khung, "",
+    t.hd ? "LƯU Ý RIÊNG\n"+t.hd+"\n" : "",
+    DOC_FORMAT
+  ].join("\n").replace(/\n{3,}/g,"\n\n").trim();
+  $("docPrompt").value=p; undim("docSt2","docSt3"); msg("docMsg","Đã tạo câu lệnh. Sang bước 2.");
+  panelSave("p_vanban","draftDoc"); $("docSt2").scrollIntoView({behavior:"smooth",block:"start"});
+};
+
+/* ---- Markdown → HTML ---- */
+function inlineMd(s){
+  s = esc(s).replace(/&lt;br\s*\/?&gt;/gi,"<br>");
+  s = s.replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/(^|[^*\w])\*(?!\s)([^*]+?)\*(?!\*)/g,"$1<i>$2</i>");
+  s = s.replace(/\[(\s*(?:\.{2,}|…+|_+)\s*|(?:bổ sung|cần|đối chiếu|chủ đề theo|điền)[^\]]*)\]/gi, '<span class="ph-mark">[$1]</span>');
+  return s;
+}
+function md(src){
+  const L=String(src).replace(/\r/g,"").split("\n"); let h="", i=0;
+  const cells=r=>r.trim().replace(/^\|/,"").replace(/\|$/,"").split("|").map(c=>c.trim());
+  while(i<L.length){
+    const l=L[i];
+    if(!l.trim() || /^\s*(-{3,}|\*{3,}|_{3,})\s*$/.test(l)){ i++; continue; }
+    let m;
+    if((m=l.match(/^\s*(#{1,6})\s+(.*)$/))){ const lv=Math.min(4,Math.max(2,m[1].length)); h+=`<h${lv}>${inlineMd(m[2].replace(/\*\*/g,""))}</h${lv}>`; i++; continue; }
+    if(/^\s*\|.*\|\s*$/.test(l)){
+      const rows=[]; while(i<L.length && /^\s*\|.*\|\s*$/.test(L[i])){ rows.push(L[i]); i++; }
+      let head=null, body=rows;
+      if(rows.length>1 && cells(rows[1]).every(c=>/^:?-{2,}:?$/.test(c))){ head=cells(rows[0]); body=rows.slice(2); }
+      h+=`<table>${head?`<thead><tr>${head.map(c=>`<th>${inlineMd(c)}</th>`).join("")}</tr></thead>`:""}<tbody>${body.map(r=>`<tr>${cells(r).map(c=>`<td>${inlineMd(c)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+      continue;
+    }
+    if((m=l.match(/^\s*[*•]\s+(.*)$/))){ h+=`<p>- ${inlineMd(m[1])}</p>`; i++; continue; }
+    if(/^\s*\*\*[^*]+\*\*\s*$/.test(l) && /^\s*\*\*\s*(\d+|[a-zđ])[\.\)]/i.test(l)){ h+=`<h3>${inlineMd(l.trim().replace(/\*\*/g,""))}</h3>`; i++; continue; }
+    h+=`<p>${inlineMd(l.trim())}</p>`; i++;
+  }
+  return h;
+}
+function cleanAI(t){
+  let L=String(t).replace(/\r/g,"").split("\n").filter(l=>!/^\s*```/.test(l));
+  const hdr=/CỘNG HÒA XÃ HỘI|Độc lập\s*[-–]\s*Tự do|^[\s#*]*(KẾ HOẠCH|BÁO CÁO|TỜ TRÌNH|THÔNG BÁO|QUY CHẾ|QUY ĐỊNH|CHƯƠNG TRÌNH|PHƯƠNG ÁN)[\s*]*$|^[\s*]*Số\s*:|^[\s*]*Kính gửi|^[\s#*]*(SỞ GIÁO DỤC|TRƯỜNG THPT|TRƯỜNG TRUNG HỌC)|ngày\s*[.…\d]*\s*tháng\s*[.…\d]*\s*năm/i;
+  let cut=0; for(let k=0;k<Math.min(14,L.length);k++){ if(hdr.test(L[k])) cut=k+1; }
+  if(cut){
+    L=L.slice(cut);
+    const roman=/^[\s#*]*(I|II|III|IV|V|1)\s*[.)]/;
+    while(L.length && !roman.test(L[0]) && (/^[\s\-–_*#|]*$/.test(L[0]) || /^[\s#*]*(V\/v|Về việc)/i.test(L[0]) || /^\s*#/.test(L[0]))) L.shift();
+  }
+  const nn=L.findIndex(l=>/^[\s#*_]*Nơi nhận/i.test(l)); if(nn>=0) L=L.slice(0,nn);
+  while(L.length && !L[L.length-1].trim()) L.pop();
+  return L.join("\n").trim();
+}
+function viDate(iso){
+  if(!iso) return "ngày &nbsp;&nbsp;&nbsp; tháng &nbsp;&nbsp;&nbsp; năm 20&nbsp;&nbsp;";
+  const [y,m,d]=iso.split("-").map(Number);
+  return `ngày ${d<10?"0"+d:d} tháng ${m<3?"0"+m:m} năm ${y}`;
+}
+function buildDocHtml(bodyHtml){
+  const P=S.profile, t=curDoc(), ld=docLoai(), so=$("d_so").value.trim();
+  const cv=SIGNERS[$("d_kycv").value]||SIGNERS.ht, nm=$("d_kyten").value.trim();
+  const nn=$("d_noinhan").value.split("\n").map(x=>x.trim().replace(/^[-–]\s*/,"")).filter(Boolean);
+  const kg = t.kinhgui && !t.other ? `<p class="kg">Kính gửi: ${esc(fillTpl(t.kinhgui))}</p>` : (ld.loai==="TỜ TRÌNH"?`<p class="kg">Kính gửi: Hiệu trưởng ${esc(schoolName())}</p>`:"");
+  return `<table class="hd"><tr><td style="width:40%">${esc(P.chuQuan)}<br><b>${esc(P.ten)}</b><span class="line"></span><div style="margin-top:8px">Số: ${so?esc(so):"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"}/${esc(ld.kh)}-${esc(P.kyHieu)}</div></td><td style="width:60%"><b>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</b><br><b class="tn">Độc lập - Tự do - Hạnh phúc</b><span class="line w"></span><div style="margin-top:8px"><i>${esc(P.diaDanh||"[Địa danh]")}, ${viDate($("d_ngay").value)}</i></div></td></tr></table>`
+   + `<p class="title">${esc(ld.loai)}</p><p class="ty">${esc($("d_trichyeu").value.trim())}</p><span class="line" style="width:22%"></span>${kg}`
+   + `<div class="body">${bodyHtml}</div>`
+   + `<table class="ft"><tr><td style="width:50%" class="nn"><b>Nơi nhận:</b><br>${nn.map(x=>"- "+esc(x)).join("<br>")}</td><td class="sig">${cv.map(esc).join("<br>")}<p class="gap">&nbsp;</p><p class="gap">&nbsp;</p><p class="gap">&nbsp;</p><p class="gap">&nbsp;</p>${esc(nm)||"&nbsp;"}</td></tr></table>`;
+}
+function checkDoc(){
+  const page=$("docPage"), bodyEl=page.querySelector(".body"); if(!bodyEl) return; const text=bodyEl.innerText;
+  const ph=page.querySelectorAll(".ph-mark").length;
+  const allowed=(S.legal+"\n"+$("d_cancu").value).replace(/\s+/g,"");
+  const cited=[...new Set((text.match(/\b\d{1,4}\/(?:\d{4}\/)?(?:NĐ-CP|QĐ-TTg|TT-[A-ZĐa-zđ]+|QH\d+|CT-TTg|NQ-CP|KH-[A-ZĐa-zđ]+|QĐ-[A-ZĐa-zđ]+|CV-[A-ZĐa-zđ]+|[A-ZĐ]{2,}-[A-ZĐa-zđ]+)/g)||[]))];
+  const foreign=cited.filter(c=>!allowed.includes(c.replace(/\s+/g,"")));
+  const box=$("docCheck"); box.style.display="block";
+  box.innerHTML = `<b>Rà soát nhanh:</b> ${ph?`còn <b>${ph}</b> chỗ tô vàng cần điền hoặc kiểm tra`:"không còn chỗ trống tô vàng"}.`
+    + (foreign.length?`<br><span style="color:#8A3A10">Văn bản trích dẫn ngoài danh mục, cần kiểm tra số hiệu: <b>${foreign.map(esc).join(", ")}</b>.</span>`:"<br>Mọi số hiệu văn bản được trích dẫn đều có trong danh mục căn cứ.")
+    + `<br>Trước khi trình ký: kiểm tra số liệu, họ tên, ngày tháng; đối chiếu hiệu lực văn bản căn cứ.`;
+}
+$("btnDocRender").onclick=()=>{
+  const raw=$("docPaste").value.trim(); if(!raw){ toast("Hãy dán câu trả lời của AI"); return; }
+  setDocEdit(false);
+  $("docPage").innerHTML = buildDocHtml(md(cleanAI(raw)));
+  checkDoc(); panelSave("p_vanban","draftDoc"); store.set("docLast",$("docPage").innerHTML);
+  $("docPage").scrollIntoView({behavior:"smooth",block:"start"});
+};
+let docEditing=false;
+function setDocEdit(on){ docEditing=on; $("docPage").contentEditable=on?"true":"false"; $("btnDocEdit").textContent=on?"Xong, lưu chỉnh sửa":"Sửa trực tiếp"; if(!on) store.set("docLast",$("docPage").innerHTML); }
+$("btnDocEdit").onclick=()=>{ if(!$("docPage").querySelector(".body")){ toast("Chưa có văn bản"); return; } setDocEdit(!docEditing); if(docEditing) $("docPage").focus(); else checkDoc(); };
+
+const WORD_CSS = `@page WordSection1{size:21.0cm 29.7cm;margin:2.0cm 1.5cm 2.0cm 3.0cm;mso-header-margin:1.0cm;mso-footer-margin:1.0cm}
+div.WordSection1{page:WordSection1}
+body{font-family:"Times New Roman",serif;font-size:14pt;line-height:1.3}
+p{margin:0}
+table.hd{width:100%;border-collapse:collapse;margin-bottom:12pt}
+table.hd td{vertical-align:top;text-align:center;font-size:13pt;padding:0}
+b.tn{font-size:14pt}
+p.title{text-align:center;font-weight:bold;font-size:14pt;margin-top:12pt}
+p.ty{text-align:center;font-weight:bold;font-size:14pt}
+p.kg{text-align:center;margin:8pt 0 6pt}
+.body h2,.body h3,.body h4{font-size:14pt;font-weight:bold;margin:6pt 0 3pt}
+.body h4{font-style:italic}
+.body p{text-indent:1.0cm;text-align:justify;margin:0 0 6pt}
+.body table{width:100%;border-collapse:collapse;margin:4pt 0 8pt}
+.body th,.body td{border:solid windowtext 1.0pt;padding:2pt 4pt;font-size:13pt;vertical-align:top}
+.body th{font-weight:bold;text-align:center;background:#F2F2F2}
+table.ft{width:100%;border-collapse:collapse;margin-top:12pt}
+table.ft td{vertical-align:top;padding:0}
+td.nn{font-size:11pt}td.nn b{font-size:12pt;font-style:italic}
+td.sig{text-align:center;font-weight:bold;font-size:14pt}
+.ph-mark{background:yellow;mso-highlight:yellow}`;
+function docForExport(){
+  const c=$("docPage").cloneNode(true); c.removeAttribute("contenteditable");
+  c.querySelectorAll("span.line").forEach(s=>{ const w=s.classList.contains("w")?"55%":(s.style.width||"35%"); const hr=document.createElement("hr"); hr.setAttribute("width",w); hr.setAttribute("align","center"); hr.setAttribute("size","1"); hr.setAttribute("noshade",""); hr.style.cssText="color:#000;margin:2pt auto"; s.replaceWith(hr); });
+  return c.innerHTML;
+}
+const docTitle = () => docLoai().loai+" "+$("d_trichyeu").value.trim();
+$("btnDocWord").onclick=()=>{
+  if(!$("docPage").querySelector(".body")){ toast("Chưa có văn bản"); return; }
+  if(docEditing) setDocEdit(false);
+  const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>${esc(docTitle())}</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]--><style>${WORD_CSS}</style></head><body><div class="WordSection1">${docForExport()}</div></body></html>`;
+  download(new Blob(["\ufeff",html],{type:"application/msword"}), slug(docTitle())+".doc");
+  toast("Đã tải file Word. Mở bằng Word, chọn Lưu thành .docx nếu cần.");
+};
+$("btnDocPrint").onclick=()=>{
+  if(!$("docPage").querySelector(".body")){ toast("Chưa có văn bản"); return; }
+  const w=window.open("","_blank"); if(!w){ toast("Trình duyệt chặn cửa sổ mới. Hãy cho phép cửa sổ bật lên."); return; }
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(docTitle())}</title><style>@page{size:A4;margin:20mm 15mm 20mm 30mm}${WORD_CSS.replace(/@page WordSection1\{[^}]*\}/,"")} hr{border:0;border-top:1px solid #000;height:0} .ph-mark{background:#FFF0A3}</style></head><body>${docForExport()}</body></html>`);
+  w.document.close(); setTimeout(()=>{ w.focus(); w.print(); },400);
+};
+$("btnDocCopy").onclick=()=>copyEl("docPage");
+$("btnDocSave").onclick=()=>{
+  if(!$("docPage").querySelector(".body")){ toast("Chưa có văn bản"); return; }
+  if(docEditing) setDocEdit(false);
+  const o={}; $("p_vanban").querySelectorAll("input[id],select[id],textarea[id]").forEach(e=>{ if(e.type!=="file") o[e.id]=e.value; });
+  const ex=S.docs.find(d=>d.title===docTitle());
+  const rec={id:ex?ex.id:uid("d"), title:docTitle(), tpl:$("docSel").value, html:$("docPage").innerHTML, form:o, date:new Date().toISOString()};
+  if(ex) Object.assign(ex,rec); else S.docs.unshift(rec);
+  store.set("docs",S.docs); renderDocSaved(); toast(ex?"Đã cập nhật văn bản đã lưu":"Đã lưu văn bản");
+};
+function renderDocSaved(){
+  $("docSaved").innerHTML = S.docs.length ? S.docs.map((d,i)=>`<div class="saved"><div class="meta"><b title="${esc(d.title)}">${esc(d.title)}</b><span>Lưu ngày ${fmtDate(d.date)}</span></div><button class="btn sm" data-dopen="${i}">Mở</button><button class="btn sm ghost danger" data-ddel="${i}">Xoá</button></div>`).join("")
+   : `<p class="hint" style="margin:0">Chưa có văn bản nào. Bấm Lưu vào danh sách sau khi dựng văn bản.</p>`;
+}
+$("docSaved").onclick=e=>{
+  const o=e.target.closest("[data-dopen]"), d=e.target.closest("[data-ddel]");
+  if(o){ const r=S.docs[+o.dataset.dopen]; $("docSel").value=r.tpl; onDocSel(); Object.entries(r.form||{}).forEach(([k,v])=>{ if($(k) && k!=="docSel") $(k).value=v; }); $("docPage").innerHTML=r.html; setDocEdit(false); undim("docSt2","docSt3"); checkDoc(); toast("Đã mở văn bản"); window.scrollTo({top:0}); }
+  if(d){ const r=S.docs[+d.dataset.ddel]; if(confirm(`Xoá "${r.title}"?`)){ S.docs.splice(+d.dataset.ddel,1); store.set("docs",S.docs); renderDocSaved(); } }
+};
+
+/* ============================== GIỚI THIỆU SÁCH ============================== */
+function renderChoices(box, items, cur, attr){
+  $(box).innerHTML = items.map(x=>`<button type="button" class="choice${x.id===cur?" on":""}" data-${attr}="${x.id}"><b>${esc(x.ten)}</b><span>${esc(x.mo)}</span></button>`).join("");
+}
+const bkS = hidden("p_sach","bkScriptV"), bkO = hidden("p_sach","bkOutV");
+bkS.value="s5"; bkO.value="fb";
+function renderBook(){ renderChoices("bkScripts",BOOK_SCRIPTS,bkS.value,"bs"); renderChoices("bkOuts",BOOK_OUTS,bkO.value,"bo"); }
+$("bkScripts").onclick=e=>{ const b=e.target.closest("[data-bs]"); if(!b) return; bkS.value=b.dataset.bs; const sc=BOOK_SCRIPTS.find(s=>s.id===bkS.value); if(sc.many && !$("bk_many").checked){ $("bk_many").checked=true; toggleMany(); } renderBook(); panelSave("p_sach","draftBook"); };
+$("bkOuts").onclick=e=>{ const b=e.target.closest("[data-bo]"); if(!b) return; bkO.value=b.dataset.bo; renderBook(); panelSave("p_sach","draftBook"); };
+function toggleMany(){ const m=$("bk_many").checked; $("bkOne").style.display=m?"none":""; $("bkMany").style.display=m?"":"none"; }
+$("bk_many").onchange=toggleMany;
+$("btnBkPrompt").onclick=()=>{
+  const many=$("bk_many").checked, sc=BOOK_SCRIPTS.find(s=>s.id===bkS.value), out=BOOK_OUTS.find(o=>o.id===bkO.value);
+  const v=id=>$(id).value.trim();
+  if(many){ if(v("bk_list").split("\n").filter(x=>x.trim()).length<2){ msg("bkMsg","Hãy nhập ít nhất 2 cuốn sách, mỗi dòng một cuốn.",true); return; } }
+  else { if(!v("bk_ten")){ msg("bkMsg","Hãy nhập tên sách.",true); $("bk_ten").focus(); return; }
+    const soul=["bk_vd","bk_ct","bk_gt","bk_khac","bk_trich"].filter(id=>v(id)).length;
+    if(soul<2){ msg("bkMsg","Hãy trả lời ít nhất 2 ô ở mục Cốt lõi cuốn sách. Đây là dữ kiện để AI không bịa nội dung.",true); return; } }
+  if(sc.need==="trich" && !v("bk_trich")){ msg("bkMsg","Cách kể này cần câu trích nguyên văn. Hãy nhập câu trích hoặc chọn cách kể khác.",true); return; }
+  if(sc.many && !many){ msg("bkMsg","Cách kể này dành cho nhiều sách. Hãy đánh dấu ô Giới thiệu nhiều sách.",true); return; }
+  const L=[BOOK_RULES,""];
+  if(many){ L.push("DANH SÁCH SÁCH (chỉ dùng đúng các ý này)", v("bk_list")); }
+  else{
+    L.push("THÔNG TIN SÁCH", `- Tên sách: ${v("bk_ten")}`, `- Tác giả, dịch giả: ${v("bk_tg")||"[không ghi]"}`, `- Nhà xuất bản, năm: ${v("bk_nxb")||"[không ghi]"}`);
+  }
+  L.push(`- Thể loại: ${$("bk_loai").selectedOptions[0].text}`, `- Ký hiệu xếp giá: ${v("bk_kh")||"[không ghi]"}`, `- Vị trí trong thư viện: ${v("bk_vt")||"[không ghi]"}`, `- Thư viện: ${S.id.name}`, `- Người đọc: ${$("bk_lop").value}`, "");
+  L.push("CỐT LÕI CUỐN SÁCH (chỉ được dùng các ý dưới đây; ý nào trống thì không viết)");
+  [["bk_vd","Vấn đề sách giúp giải quyết"],["bk_ai","Ai nên đọc"],["bk_ct","Chi tiết đắt nhất"],["bk_trich","Câu trích nguyên văn (giữ nguyên từng chữ)"],["bk_khac","Điểm khác biệt"],["bk_cat","Điểm dừng kể"],["bk_gt","Giá trị người đọc nhận được"]].forEach(([id,l])=>{ if(v(id)) L.push(`- ${l}: ${v(id)}`); });
+  L.push("", `CÁCH KỂ: ${sc.ten}`, sc.khung, "", `SẢN PHẨM CẦN VIẾT: ${out.ten}`, out.yc);
+  $("bkPrompt").value=L.join("\n"); undim("bkSt5"); msg("bkMsg","Đã tạo câu lệnh.");
+  $("btnBkToPoster").style.display = out.target==="poster"?"":"none";
+  $("btnBkToVideo").style.display = out.target==="video"||!many?"":"none";
+  panelSave("p_sach","draftBook"); $("bkSt5").scrollIntoView({behavior:"smooth",block:"start"});
+};
+$("btnBkCopyOut").onclick=()=>copyEl("bkPaste");
+function parseTagged(t){ const o={}; String(t).split("\n").forEach(l=>{ const m=l.match(/^\s*[*\-]*\s*\[([^\]]+)\]\s*[:：\-–]?\s*(.+)$/); if(m) o[m[1].trim().toLowerCase()]=m[2].replace(/^\*+|\*+$/g,"").replace(/^["“]|["”]$/g,"").trim(); }); return o; }
+$("btnBkToPoster").onclick=()=>{
+  const o=parseTagged($("bkPaste").value); if(!Object.keys(o).length){ toast("Chưa thấy các dòng dạng [Tiêu đề] ... trong câu trả lời"); return; }
+  psV.value="sach"; renderPoster(); STYLES.find(s=>s.id==="sach").slots.forEach((s,i)=>{ const k=s[0].toLowerCase(); if(o[k]) $("ps_s"+i).value=o[k]; });
+  panelSave("p_poster","draftPoster"); go("poster"); toast("Đã chuyển chữ sang Poster AI");
+};
+$("btnBkToVideo").onclick=()=>{
+  const v=id=>$(id).value.trim();
+  $("vType").value="sach"; onVType();
+  $("vInfo").value=[`Tên sách: ${v("bk_ten")}`, v("bk_tg")&&`Tác giả: ${v("bk_tg")}`, v("bk_vd")&&`Vấn đề sách giải quyết: ${v("bk_vd")}`, v("bk_ct")&&`Chi tiết đắt nhất: ${v("bk_ct")}`, v("bk_trich")&&`Câu trích nguyên văn: ${v("bk_trich")}`, v("bk_cat")&&`Dừng kể ở: ${v("bk_cat")}`, v("bk_gt")&&`Giá trị: ${v("bk_gt")}`, v("bk_vt")&&`Vị trí sách: ${v("bk_vt")}`, v("bkPaste")&&("\nÝ tưởng đã có:\n"+v("bkPaste"))].filter(Boolean).join("\n");
+  panelSave("p_video","draftVideo"); go("video"); toast("Đã chuyển sang Video ngắn");
+};
+const BK_FIELDS=["bk_many","bk_ten","bk_tg","bk_nxb","bk_list","bk_loai","bk_lop","bk_kh","bk_vt","bk_vd","bk_ai","bk_ct","bk_trich","bk_khac","bk_cat","bk_gt","bkScriptV","bkOutV","bkPaste"];
+$("btnBkSave").onclick=()=>{
+  const title=$("bk_many").checked?("Nhiều sách: "+($("bk_list").value.split("\n")[0]||"").slice(0,40)):$("bk_ten").value.trim();
+  if(!title){ toast("Hãy nhập tên sách"); return; }
+  const f={}; BK_FIELDS.forEach(id=>f[id]=$(id).type==="checkbox"?$(id).checked:$(id).value);
+  const ex=S.books.find(b=>b.title===title); const rec={id:ex?ex.id:uid("b"),title,f,date:new Date().toISOString()};
+  if(ex) Object.assign(ex,rec); else S.books.unshift(rec);
+  store.set("books",S.books); renderBookSaved(); toast(ex?"Đã cập nhật sách":"Đã lưu sách");
+};
+function renderBookSaved(){
+  $("bkCount").textContent=S.books.length?`(${S.books.length})`:"";
+  $("bkSavedBox").innerHTML = S.books.length ? S.books.map((b,i)=>`<div class="saved"><div class="meta"><b>${esc(b.title)}</b><span>Lưu ngày ${fmtDate(b.date)}</span></div><button class="btn sm" data-bopen="${i}">Mở</button><button class="btn sm ghost danger" data-bdel="${i}">Xoá</button></div>`).join("") : `<p class="hint" style="margin:0">Chưa lưu sách nào.</p>`;
+}
+$("btnBkOpen").onclick=()=>{ const b=$("bkSavedBox"); b.style.display=b.style.display==="none"?"flex":"none"; renderBookSaved(); };
+$("bkSavedBox").onclick=e=>{
+  const o=e.target.closest("[data-bopen]"), d=e.target.closest("[data-bdel]");
+  if(o){ const r=S.books[+o.dataset.bopen]; Object.entries(r.f).forEach(([k,v])=>{ const el=$(k); if(!el) return; if(el.type==="checkbox") el.checked=v; else el.value=v; }); toggleMany(); renderBook(); $("bkSavedBox").style.display="none"; toast("Đã mở sách"); }
+  if(d){ const r=S.books[+d.dataset.bdel]; if(confirm(`Xoá "${r.title}"?`)){ S.books.splice(+d.dataset.bdel,1); store.set("books",S.books); renderBookSaved(); } }
+};
+$("btnBkNew").onclick=()=>{ if(!confirm("Xoá các ô đang nhập để bắt đầu sách mới?")) return; BK_FIELDS.forEach(id=>{ const el=$(id); if(el.type==="checkbox") el.checked=false; else if(el.tagName!=="SELECT" && el.type!=="hidden") el.value=""; }); $("bkPrompt").value=""; toggleMany(); panelSave("p_sach","draftBook"); };
+
+/* ============================== POSTER AI ============================== */
+const psV = hidden("p_poster","psStyleV"); psV.value="sukien";
+const curStyle = () => STYLES.find(s=>s.id===psV.value) || STYLES[0];
+function renderPoster(){
+  renderChoices("psStyles",STYLES,psV.value,"st");
+  const st=curStyle(), old=[...$("psSlots").querySelectorAll("input")].reduce((o,e)=>(o[e.dataset.k]=e.value,o),{});
+  $("psSlots").innerHTML = st.slots.map(([k,max,ph],i)=>`<div class="slot"><label for="ps_s${i}">${esc(k)} <span class="opt">(tối đa ${max} chữ; để trống nếu không dùng)</span></label><input id="ps_s${i}" data-k="${esc(k)}" data-max="${max}" placeholder="${esc(ph)}" value="${esc(old[k]||"")}"></div>`).join("");
+}
+$("psStyles").onclick=e=>{ const b=e.target.closest("[data-st]"); if(!b) return; psV.value=b.dataset.st; renderPoster(); panelSave("p_poster","draftPoster"); };
+$("btnPsTextPr").onclick=()=>{
+  const st=curStyle(), topic=$("psTopic").value.trim(); if(words(topic)<5){ toast("Hãy mô tả nội dung poster cụ thể hơn"); return; }
+  $("psTextPr").value = `Bạn là chuyên viên truyền thông của thư viện trường trung học phổ thông ở Việt Nam. Viết chữ cho poster loại "${st.ten}" dành cho học sinh 15–18 tuổi.
+NỘI DUNG: ${topic}
+QUY TẮC: ngắn, giàu hình ảnh, đúng chính tả tiếng Việt; không bịa ngày giờ, địa điểm, tên người nếu nội dung không có (khi đó để trống dòng đó); không dùng biểu tượng cảm xúc.
+Trả lời ĐÚNG các dòng sau, mỗi dòng một nhãn trong ngoặc vuông, không thêm gì khác:
+${st.slots.map(([k,max])=>`[${k}] (tối đa ${max} chữ)`).join("\n")}`;
+};
+$("btnPsFill").onclick=()=>{ const o=parseTagged($("psTextPaste").value); let n=0; curStyle().slots.forEach((s,i)=>{ const v=o[s[0].toLowerCase()]; if(v && !/^\(?tối đa/i.test(v)){ $("ps_s"+i).value=v.replace(/\s*\(tối đa[^)]*\)\s*$/i,""); n++; } }); toast(n?`Đã điền ${n} ô`:"Không tìm thấy dòng nào khớp nhãn"); panelSave("p_poster","draftPoster"); };
+$("btnPsPrompt").onclick=()=>{
+  const st=curStyle(), ratio=$("psRatio").value||st.ratio;
+  const slots=st.slots.map(([k,max],i)=>({k,max,v:$("ps_s"+i).value.trim()})).filter(s=>s.v);
+  if(!slots.length){ msg("psMsg","Hãy điền ít nhất dòng tiêu đề.",true); return; }
+  const over=slots.filter(s=>words(s.v)>s.max);
+  const c=charById($("psChar").value), set=settingList()[+$("psSetting").value]||SETTINGS[0], occ=OCCASIONS[+$("psOcc").value]||OCCASIONS[0];
+  const ex=EXTRAS[+$("psExtras").value]||EXTRAS[0], mood=MOODS[+$("psMood").value]||MOODS[0], shot=SHOTS[+$("psShot").value]||SHOTS[0];
+  const L=[];
+  const orient = ratio==="1:1"?"vuông":ratio==="16:9"?"ngang":"dọc";
+  L.push(`Hãy TẠO MỘT HÌNH ẢNH (không trả lời bằng chữ). Poster khổ ${orient}, tỉ lệ ${ratio}, chất lượng cao, sắc nét.`);
+  L.push(`PHONG CÁCH: ${st.style}.`);
+  L.push(`BỐ CỤC: ${st.layout}.`);
+  L.push(`BỐI CẢNH: ${set[1]}${$("psSetAttach").checked?" – dựa theo ảnh thật của thư viện đính kèm, giữ đúng không gian, màu sắc và đồ vật trong ảnh":""}.${occ[1]?" Dịp: "+occ[0]+", "+occ[1]+".":""}`);
+  if(c) L.push(`NHÂN VẬT CHÍNH: ${charDesc(c)}.${$("psAttach").checked?" Giữ đúng gương mặt, kiểu tóc, trang phục như ảnh nhân vật đính kèm.":""}`);
+  if(ex[1]) L.push(`NHÂN VẬT PHỤ: ${ex[1]}.`);
+  L.push(`KHÔNG KHÍ: ${mood[1]}. GÓC NHÌN: ${shot[1]}.`);
+  L.push(`MÀU SẮC: ${paletteText($("psColor").value.trim())}.`);
+  L.push(`ĐẶC TRƯNG ĐỊA PHƯƠNG: ${localeBlock()}`);
+  L.push(`CHỮ TRÊN POSTER (đúng ${slots.length} dòng, chữ to, rõ, dễ đọc, phông không chân có đủ dấu tiếng Việt):\n${slots.map((s,i)=>`${i+1}. ${s.k}: "${s.v}"`).join("\n")}`);
+  if($("psReserve").checked) L.push(`CHỪA KHOẢNG TRỐNG: để một vùng trống gọn khoảng 22% chiều rộng ở góc dưới bên phải (nền sạch, không chữ, không hình) để chèn mã QR và logo sau.`);
+  if($("psExtra").value.trim()) L.push(`YÊU CẦU THÊM: ${$("psExtra").value.trim()}.`);
+  L.push(IMG_RULES);
+  $("psPrompt").value=L.join("\n\n"); undim("psSt4");
+  msg("psMsg", over.length?`Đã tạo câu lệnh. Lưu ý: ${over.map(s=>`"${s.k}" có ${words(s.v)} chữ (gợi ý tối đa ${s.max})`).join("; ")} – chữ càng dài, AI càng dễ viết sai.`:"Đã tạo câu lệnh. Sang bước 4.", !!over.length);
+  panelSave("p_poster","draftPoster");
+};
+
+/* ============================== HOÀN THIỆN POSTER ============================== */
+const FIN={bg:null,bgType:"navy",w:1200,h:1800,layers:[],sel:-1};
+const cv=$("finCanvas"), cx=cv.getContext("2d");
+const RATIOS={"2:3":[1200,1800],"4:5":[1200,1500],"1:1":[1200,1200],"9:16":[1080,1920],"16:9":[1920,1080]};
+function finSize(w,h){ FIN.w=cv.width=w; FIN.h=cv.height=h; $("finSize").textContent=`${w} × ${h} px`; }
+$("finFile").onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ const img=new Image(); img.onload=()=>{ const k=Math.min(1,2400/Math.max(img.width,img.height)); FIN.bg=img; FIN.bgType="image"; finSize(Math.round(img.width*k),Math.round(img.height*k)); drawFin(); toast("Đã mở ảnh"); }; img.src=r.result; }; r.readAsDataURL(f); e.target.value=""; };
+$("btnFinBlank").onclick=()=>{ const [w,h]=RATIOS[$("finRatio").value]; FIN.bg=null; FIN.bgType=$("finBg").value; finSize(w,h); if(!FIN.layers.length) addText("Tiêu đề poster",{y:.2,size:.075}); drawFin(); };
+function bgPaint(){
+  const W=FIN.w,H=FIN.h, c1=S.id.c1||"#13294B", c2=S.id.c2||"#C9A227";
+  if(FIN.bgType==="image" && FIN.bg){ cx.drawImage(FIN.bg,0,0,W,H); return; }
+  if(FIN.bgType==="white"){ cx.fillStyle="#fff"; cx.fillRect(0,0,W,H); cx.fillStyle=c1; cx.fillRect(0,H*.82,W,H*.18); cx.fillStyle=c2; cx.fillRect(0,H*.82,W,Math.max(6,H*.006)); return; }
+  if(FIN.bgType==="gold"){ cx.fillStyle="#FBF5E2"; cx.fillRect(0,0,W,H); cx.fillStyle=c1; cx.fillRect(0,0,W,H*.035); return; }
+  cx.fillStyle=c1; cx.fillRect(0,0,W,H); const m=Math.round(W*.035); cx.strokeStyle=c2; cx.lineWidth=Math.max(4,W*.006); cx.strokeRect(m,m,W-2*m,H-2*m);
+}
+function wrapLines(t, maxW){
+  const out=[]; String(t).split("\n").forEach(par=>{ const ws=par.split(/\s+/); let line=""; ws.forEach(w=>{ const test=line?line+" "+w:w; if(cx.measureText(test).width>maxW && line){ out.push(line); line=w; } else line=test; }); out.push(line); }); return out;
+}
+function drawLayer(L, preview){
+  const W=FIN.w,H=FIN.h;
+  if(L.type==="text"){
+    const fs=Math.round(L.size*W); cx.font=`${L.bold?700:500} ${fs}px ${L.font==="serif"?'Lora, Georgia, serif':'"Be Vietnam Pro", Arial, sans-serif'}`;
+    cx.textBaseline="middle"; cx.textAlign=L.align;
+    const lines=wrapLines(L.text, L.maxW*W), lh=fs*1.22, tw=Math.max(...lines.map(l=>cx.measureText(l).width)), th=lh*lines.length;
+    const x=L.x*W, y=L.y*H, left = L.align==="center"?x-tw/2:L.align==="left"?x:x-tw;
+    const pad=fs*.45;
+    if(L.box!=="none"){ cx.fillStyle = L.box==="light"?"rgba(255,255,255,.88)":L.box==="dark"?"rgba(19,41,75,.86)":(S.id.c2||"#C9A227"); roundRect(left-pad,y-th/2-pad*.7,tw+2*pad,th+pad*1.4,fs*.35); cx.fill(); }
+    cx.fillStyle=L.color; lines.forEach((l,i)=>cx.fillText(l,x,y-th/2+lh*(i+.5)));
+    L._bb=[left-pad,y-th/2-pad,tw+2*pad,th+2*pad];
+  } else {
+    const w=L.w*W, h = L.type==="qr" ? w : w*(L.img.height/L.img.width), x=L.x*W-w/2, y=L.y*H-h/2;
+    if(L.type==="qr"){ const n=L.qr.getModuleCount(), q=4, cell=w/(n+2*q); cx.fillStyle="#fff"; roundRect(x,y,w,w,w*.04); cx.fill(); cx.fillStyle="#000"; for(let r=0;r<n;r++) for(let c=0;c<n;c++) if(L.qr.isDark(r,c)) cx.fillRect(Math.floor(x+(c+q)*cell),Math.floor(y+(r+q)*cell),Math.ceil(cell),Math.ceil(cell)); }
+    else cx.drawImage(L.img,x,y,w,h);
+    L._bb=[x,y,w,h];
+  }
+  if(preview && FIN.layers[FIN.sel]===L){ cx.save(); cx.setLineDash([12,8]); cx.strokeStyle="#C9A227"; cx.lineWidth=Math.max(3,W*.003); cx.strokeRect(...L._bb); cx.restore(); }
+}
+function roundRect(x,y,w,h,r){ cx.beginPath(); cx.moveTo(x+r,y); cx.arcTo(x+w,y,x+w,y+h,r); cx.arcTo(x+w,y+h,x,y+h,r); cx.arcTo(x,y+h,x,y,r); cx.arcTo(x,y,x+w,y,r); cx.closePath(); }
+function drawFin(preview=true){ cx.clearRect(0,0,FIN.w,FIN.h); bgPaint(); FIN.layers.forEach(L=>drawLayer(L,preview)); renderLayers(); }
+function addText(t,o={}){ FIN.layers.push(Object.assign({type:"text",text:t,x:.5,y:.5,size:.05,color:FIN.bgType==="navy"?"#FFFFFF":(S.id.c1||"#13294B"),bold:true,font:"sans",align:"center",box:"none",maxW:.86},o)); FIN.sel=FIN.layers.length-1; }
+$("btnAddText").onclick=()=>{ addText("Nội dung mới",{y:.75}); drawFin(); renderProps(); };
+$("btnAddLogo").onclick=()=>{ if(!S.id.logo){ toast("Chưa có logo. Thêm logo ở mục Hồ sơ và nhận diện."); return; } const img=new Image(); img.onload=()=>{ FIN.layers.push({type:"img",name:"Logo thư viện",img,x:.12,y:.08,w:.14}); FIN.sel=FIN.layers.length-1; drawFin(); renderProps(); }; img.src=S.id.logo; };
+$("finImg").onchange=e=>{ const f=e.target.files[0]; if(!f) return; shrinkImage(f,1200,d=>{ const img=new Image(); img.onload=()=>{ FIN.layers.push({type:"img",name:f.name,img,x:.5,y:.5,w:.3}); FIN.sel=FIN.layers.length-1; drawFin(); renderProps(); }; img.src=d; }); e.target.value=""; };
+$("btnAddQR").onclick=()=>{
+  const url=prompt("Nhập đường link cho mã QR (VD: trang đăng ký, biểu mẫu, trang thư viện số):","https://");
+  if(!url || url==="https://") return;
+  try{ const q=qrcode(0,"M"); q.addData(url); q.make(); FIN.layers.push({type:"qr",name:"QR: "+url,url,qr:q,x:.84,y:.88,w:.2}); FIN.sel=FIN.layers.length-1; drawFin(); renderProps(); toast("Đã thêm mã QR. Quét thử trước khi đăng."); }
+  catch(err){ toast("Link quá dài để tạo mã QR. Hãy dùng link rút gọn."); }
+};
+function renderLayers(){
+  $("finLayers").innerHTML = FIN.layers.length ? FIN.layers.map((L,i)=>`<div class="layer${i===FIN.sel?" on":""}" data-li="${i}"><span>${L.type==="text"?"Chữ: "+esc(L.text.split("\n")[0]):esc(L.name)}</span></div>`).slice().reverse().join("") : `<p class="hint" style="margin:0">Chưa có lớp nào.</p>`;
+}
+$("finLayers").onclick=e=>{ const l=e.target.closest("[data-li]"); if(!l) return; FIN.sel=+l.dataset.li; drawFin(); renderProps(); };
+function renderProps(){
+  const L=FIN.layers[FIN.sel], box=$("finProps");
+  if(!L){ box.innerHTML=`<p class="hint">Chọn một lớp để chỉnh.</p>`; return; }
+  const common=`<div class="bar"><button class="btn sm" data-fa="up">Đưa lên trên</button><button class="btn sm" data-fa="down">Đưa xuống dưới</button><button class="btn sm danger" data-fa="del">Xoá lớp</button></div>`;
+  if(L.type==="text"){
+    box.innerHTML=`<label for="fp_text">Nội dung (Enter để xuống dòng)</label><textarea id="fp_text" rows="3">${esc(L.text)}</textarea>
+    <label for="fp_size">Cỡ chữ</label><input type="range" id="fp_size" min="1.5" max="16" step=".25" value="${(L.size*100).toFixed(2)}">
+    <label for="fp_maxw">Độ rộng tối đa</label><input type="range" id="fp_maxw" min="20" max="96" value="${Math.round(L.maxW*100)}">
+    <div class="row3"><div><label for="fp_color">Màu chữ</label><input type="color" id="fp_color" value="${L.color}"></div><div><label for="fp_font">Phông</label><select id="fp_font"><option value="sans">Không chân</option><option value="serif">Có chân</option></select></div><div><label for="fp_align">Căn lề</label><select id="fp_align"><option value="center">Giữa</option><option value="left">Trái</option><option value="right">Phải</option></select></div></div>
+    <div class="row"><div><label for="fp_box">Nền chữ</label><select id="fp_box"><option value="none">Không</option><option value="light">Khung trắng</option><option value="dark">Khung navy</option><option value="accent">Khung màu nhấn</option></select></div><div><label class="chk" style="margin-top:34px"><input type="checkbox" id="fp_bold"${L.bold?" checked":""}> Chữ đậm</label></div></div>${common}`;
+    $("fp_font").value=L.font; $("fp_align").value=L.align; $("fp_box").value=L.box;
+  } else {
+    box.innerHTML=`<label for="fp_w">Kích thước</label><input type="range" id="fp_w" min="5" max="100" value="${Math.round(L.w*100)}">${L.type==="qr"?`<p class="hint">Link: ${esc(L.url)}</p>`:""}${common}`;
+  }
+}
+$("finProps").addEventListener("input",e=>{
+  const L=FIN.layers[FIN.sel]; if(!L) return; const id=e.target.id, v=e.target.value;
+  if(id==="fp_text") L.text=v; else if(id==="fp_size") L.size=v/100; else if(id==="fp_maxw") L.maxW=v/100; else if(id==="fp_color") L.color=v;
+  else if(id==="fp_font") L.font=v; else if(id==="fp_align") L.align=v; else if(id==="fp_box") L.box=v; else if(id==="fp_bold") L.bold=e.target.checked; else if(id==="fp_w") L.w=v/100;
+  drawFin();
+});
+$("finProps").addEventListener("click",e=>{
+  const b=e.target.closest("[data-fa]"); if(!b) return; const i=FIN.sel, a=FIN.layers;
+  if(b.dataset.fa==="del"){ a.splice(i,1); FIN.sel=-1; }
+  else if(b.dataset.fa==="up" && i<a.length-1){ [a[i],a[i+1]]=[a[i+1],a[i]]; FIN.sel=i+1; }
+  else if(b.dataset.fa==="down" && i>0){ [a[i],a[i-1]]=[a[i-1],a[i]]; FIN.sel=i-1; }
+  drawFin(); renderProps();
+});
+let drag=null;
+function cpos(e){ const r=cv.getBoundingClientRect(); return [(e.clientX-r.left)*cv.width/r.width,(e.clientY-r.top)*cv.height/r.height]; }
+cv.addEventListener("pointerdown",e=>{
+  const [x,y]=cpos(e); let hit=-1;
+  for(let i=FIN.layers.length-1;i>=0;i--){ const b=FIN.layers[i]._bb; if(b && x>=b[0]&&x<=b[0]+b[2]&&y>=b[1]&&y<=b[1]+b[3]){ hit=i; break; } }
+  FIN.sel=hit; drawFin(); renderProps();
+  if(hit>=0){ const L=FIN.layers[hit]; drag={dx:x-L.x*FIN.w, dy:y-L.y*FIN.h}; cv.setPointerCapture(e.pointerId); cv.style.cursor="grabbing"; }
+});
+cv.addEventListener("pointermove",e=>{ if(!drag) return; const L=FIN.layers[FIN.sel]; const [x,y]=cpos(e); L.x=Math.min(1,Math.max(0,(x-drag.dx)/FIN.w)); L.y=Math.min(1,Math.max(0,(y-drag.dy)/FIN.h)); drawFin(); });
+cv.addEventListener("pointerup",()=>{ drag=null; cv.style.cursor="grab"; });
+document.addEventListener("keydown",e=>{
+  if(!$("p_hoanthien").classList.contains("on") || FIN.sel<0 || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+  const L=FIN.layers[FIN.sel], s=e.shiftKey?.02:.004, k={ArrowLeft:[-s,0],ArrowRight:[s,0],ArrowUp:[0,-s],ArrowDown:[0,s]}[e.key];
+  if(k){ L.x+=k[0]; L.y+=k[1]; drawFin(); e.preventDefault(); }
+  if(e.key==="Delete"){ FIN.layers.splice(FIN.sel,1); FIN.sel=-1; drawFin(); renderProps(); }
+});
+$("btnFinPng").onclick=()=>{
+  if(FIN.bgType!=="image" && !FIN.layers.length){ toast("Hãy mở ảnh hoặc tạo nền trước"); return; }
+  drawFin(false);
+  cv.toBlob(b=>{ download(b, slug((S.id.name||"poster")+"_poster")+".png"); drawFin(true); toast("Đã tải ảnh PNG"); },"image/png");
+};
+
+/* ============================== VIDEO ============================== */
+const curV = () => VTYPES.find(v=>v.id===$("vType").value) || VTYPES[0];
+function onVType(){ const v=curV(); $("vDesc").textContent=v.mo; $("vDur").value=v.dur; $("vScenes").value=v.sc; $("vHint").textContent=v.hint; $("vInfo").placeholder=v.hint; }
+$("vType").onchange=onVType;
+let SCENES=[];
+$("btnVPrompt").onclick=()=>{
+  const v=curV(), info=$("vInfo").value.trim(); if(words(info)<10){ msg("vMsg","Hãy nhập nội dung cụ thể hơn. "+v.hint,true); return; }
+  const dur=Math.max(15,+$("vDur").value||v.dur), sc=Math.max(3,+$("vScenes").value||v.sc), c=charById($("vChar").value);
+  const perWords=Math.round(dur/sc*2.4);
+  $("vPr").value = `Bạn là biên kịch video ngắn cho thư viện trường trung học phổ thông ở Việt Nam, người xem là học sinh 15–18 tuổi.
+VIẾT KỊCH BẢN CHIA CẢNH
+- Loại video: ${v.ten}
+- Tổng thời lượng: ${dur} giây, chia ${sc} cảnh${$("vEnd").checked?" (chưa tính cảnh kết thương hiệu, phần mềm tự thêm)":""}
+- Khổ: ${$("vRatio").value}
+- Nhân vật dẫn: ${c?charDesc(c):"không có nhân vật dẫn, dùng hình ảnh minh họa và lời đọc"}
+- Giọng đọc: ${$("vVoice").value.trim()}
+- Thư viện: ${S.id.name}, ${schoolName()}
+CẤU TRÚC: ${v.khung}
+NỘI DUNG (chỉ dùng thông tin này, không bịa thêm số liệu, tên người, chi tiết sách):
+${info}
+QUY TẮC
+1. 3 giây đầu phải có câu móc gây tò mò, không mở bằng lời chào.
+2. Lời đọc mỗi cảnh vừa thời lượng cảnh (khoảng 2–2,5 chữ mỗi giây; cảnh ${Math.round(dur/sc)} giây thì khoảng ${perWords} chữ), câu ngắn, văn nói tự nhiên.
+3. Chữ trên màn hình tối đa 8 chữ mỗi cảnh, đúng chính tả.
+4. Hình ảnh mô tả một khung hình tĩnh cụ thể (ai, ở đâu, làm gì, góc máy) để vẽ bằng AI; không yêu cầu chữ xuất hiện trong hình.
+5. Chuyển động mô tả chuyển động máy quay và nhân vật trong cảnh, đơn giản, tự nhiên.
+ĐỊNH DẠNG: lặp lại đúng mẫu sau cho từng cảnh, không viết gì khác ngoài các cảnh:
+[CẢNH 1]
+Thời lượng: ... giây
+Hình ảnh: ...
+Chuyển động: ...
+Lời đọc: ...
+Chữ trên màn hình: ...`;
+  undim("vSt4"); msg("vMsg","Đã tạo câu lệnh. Sang bước 4."); panelSave("p_video","draftVideo"); $("vSt4").scrollIntoView({behavior:"smooth",block:"start"});
+};
+function parseScenes(t){
+  const parts=String(t).replace(/\r/g,"").split(/^\s*[#*\s]*\[?\s*CẢNH\s*(\d+)\s*\]?[^\n]*$/im); const out=[];
+  for(let i=1;i<parts.length;i+=2){
+    const o={n:+parts[i],tl:"",ha:"",cd:"",ld:"",ch:""}, map={"thời lượng":"tl","hình ảnh":"ha","chuyển động":"cd","lời đọc":"ld","chữ trên màn hình":"ch"}; let cur=null;
+    parts[i+1].split("\n").forEach(l=>{ const m=l.match(/^\s*[-*]*\s*\**(Thời lượng|Hình ảnh|Chuyển động|Lời đọc|Chữ trên màn hình)\**\s*[:：]\s*(.*)$/i); if(m){ cur=map[m[1].toLowerCase()]; o[cur]=m[2].trim(); } else if(cur && l.trim()) o[cur]+=" "+l.trim(); });
+    Object.keys(map).forEach(k=>o[map[k]]=o[map[k]].replace(/\*\*/g,"").replace(/^["“]|["”]$/g,"").trim());
+    out.push(o);
+  }
+  return out;
+}
+function vImgPrompt(s, isEnd){
+  const c=charById($("vChar").value), look=LOOKS[+$("vLook").value]||LOOKS[0], set=settingList()[+$("vSetting").value]||SETTINGS[0], mood=MOODS[+$("vMood").value]||MOODS[0], ratio=$("vRatio").value;
+  if(isEnd) return `Hãy TẠO MỘT HÌNH ẢNH (không trả lời bằng chữ). Khung hình kết video, khổ ${ratio}, ${look[1]}. Nền gọn, sang, dùng ${paletteText("")}; một chi tiết sách mở nhẹ nhàng ở cạnh dưới. Để trống hoàn toàn khoảng giữa khung hình (để chèn tên và logo thư viện trong CapCut). Không vẽ bất kỳ chữ, logo, mã QR nào.`;
+  return [`Hãy TẠO MỘT HÌNH ẢNH (không trả lời bằng chữ). Khung hình cảnh ${s.n} của một video, khổ ${ratio}, ${look[1]}.`,
+    `NỘI DUNG KHUNG HÌNH: ${s.ha}`,
+    `BỐI CẢNH MẶC ĐỊNH (nếu nội dung không nói khác): ${set[1]}. KHÔNG KHÍ: ${mood[1]}.`,
+    c?`NHÂN VẬT DẪN (giữ nhất quán gương mặt, tóc, trang phục ở mọi cảnh; đính kèm ảnh nhân vật chuẩn nếu có): ${charDesc(c)}.`:"",
+    `ĐẶC TRƯNG ĐỊA PHƯƠNG: ${localeBlock()}`,
+    `KHÔNG vẽ chữ trong hình (chữ sẽ chèn trong CapCut). Người Việt Nam, nét mặt Á Đông, học sinh THPT 15–18 tuổi trang phục kín đáo. Tránh tay chân, khuôn mặt biến dạng.`].filter(Boolean).join("\n");
+}
+function vMotionPrompt(s, dur){ return `Tạo đoạn video ${dur||"5"} giây từ ảnh đính kèm, khổ ${$("vRatio").value}.\nCHUYỂN ĐỘNG: ${s.cd||"máy quay tiến chậm vào chủ thể"}.\nGiữ nguyên gương mặt, trang phục, bối cảnh như trong ảnh. Chuyển động mượt, tự nhiên, không biến dạng, không xuất hiện chữ, không thêm người mới.`; }
+$("btnVParse").onclick=()=>{
+  SCENES=parseScenes($("vPaste").value);
+  if(!SCENES.length){ toast("Không tìm thấy cảnh nào. Kịch bản cần có dòng [CẢNH 1], [CẢNH 2]..."); return; }
+  const endOn=$("vEnd").checked;
+  $("vOut").innerHTML = `<div class="note" style="margin:0 0 12px">Quy trình mỗi cảnh: (1) dán câu lệnh ảnh vào ChatGPT hoặc Gemini, tải ảnh về; (2) đưa ảnh vào công cụ tạo video từ ảnh (Gemini/Veo, Google Flow, Kling...) cùng câu lệnh chuyển động; (3) tải đoạn video về để ghép.</div>`
+   + SCENES.map((s,i)=>{ const d=(s.tl.match(/\d+/)||[""])[0]; return `<div class="scene"><h4>Cảnh ${s.n}${d?` <span class="tag g">${d} giây</span>`:""}</h4>
+    <div class="kv"><b>Lời đọc:</b> ${esc(s.ld)||"<i>(không có)</i>"}</div><div class="kv"><b>Chữ trên màn hình:</b> ${esc(s.ch)||"<i>(không có)</i>"}</div>
+    <div class="row" style="margin-top:8px"><div><label for="vi_${i}">Câu lệnh ảnh khung hình</label><textarea id="vi_${i}" readonly>${esc(vImgPrompt(s))}</textarea><div class="bar" style="margin-top:6px"><button class="btn sm pri" data-copy="vi_${i}">Sao chép</button></div></div>
+    <div><label for="vm_${i}">Câu lệnh chuyển động</label><textarea id="vm_${i}" readonly>${esc(vMotionPrompt(s,d))}</textarea><div class="bar" style="margin-top:6px"><button class="btn sm pri" data-copy="vm_${i}">Sao chép</button></div></div></div></div>`; }).join("")
+   + (endOn?`<div class="scene"><h4>Cảnh kết thương hiệu <span class="tag g">3 giây</span></h4><div class="kv">Trong CapCut: chèn tên <b>${esc(S.id.name)}</b>, logo trường và một câu mời lên ảnh nền này.</div><label for="vi_end">Câu lệnh ảnh nền cảnh kết</label><textarea id="vi_end" readonly>${esc(vImgPrompt({},true))}</textarea><div class="bar" style="margin-top:6px"><button class="btn sm pri" data-copy="vi_end">Sao chép</button></div></div>`:"");
+  $("vAllVoice").value = SCENES.map(s=>s.ld).filter(Boolean).join("\n\n");
+  const music=$("vMusic").selectedOptions[0].text, look=LOOKS[+$("vLook").value]||LOOKS[0], first=SCENES[0];
+  $("vThumb").value = `Hãy TẠO MỘT HÌNH ẢNH ảnh bìa video, khổ ${$("vRatio").value}, ${look[1]}. Nội dung: ${first.ha}. Bố cục có một vùng trống lớn ở 1/3 trên để chèn tiêu đề trong CapCut. Màu: ${paletteText("")}. ${localeBlock()} Không vẽ chữ.`;
+  $("vCap").value = `Viết chú thích đăng kèm video "${curV().ten}" trên trang Facebook của ${S.id.name}. Lời đọc của video:\n${$("vAllVoice").value}\nYÊU CẦU: 60–100 chữ; câu đầu là câu móc; không lời chào; có lời mời đến thư viện; 3–5 hashtag tiếng Việt không dấu; không bịa thông tin ngoài lời đọc.`;
+  $("vCapcut").innerHTML = CAPCUT.map((t,i)=>`<li>${esc(i===4?t.replace("Thêm nhạc nền","Thêm nhạc nền ("+music.toLowerCase()+")"):t)}</li>`).join("");
+  undim("vSt5","vSt6"); panelSave("p_video","draftVideo"); toast(`Đã tách ${SCENES.length} cảnh`);
+};
+
+/* ============================== CĂN CỨ, SAO LƯU ============================== */
+$("btnLegalSave").onclick=()=>{ S.legal=$("legal").value.trim(); store.set("legal",S.legal); toast("Đã lưu danh mục căn cứ"); };
+$("btnLegalReset").onclick=()=>{ if(!confirm("Khôi phục danh mục căn cứ mặc định?")) return; S.legal=LEGAL_DEFAULT; $("legal").value=S.legal; store.set("legal",S.legal); };
+$("aiDefault").onchange=()=>{ S.settings.ai=$("aiDefault").value; store.set("settings",S.settings); renderAIBars(); };
+$("btnBackup").onclick=()=>{
+  const data={}; try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k.startsWith(KEY)) data[k.slice(KEY.length)]=JSON.parse(localStorage.getItem(k)); } }catch(e){}
+  download(new Blob([JSON.stringify({app:"tro-ly-thu-vien-ntt2",version:1,date:new Date().toISOString(),data},null,1)],{type:"application/json"}), `saoluu_thuvien_${todayISO()}.json`);
+  msg("bkpMsg","Đã tải file sao lưu. Cất file ở Google Drive hoặc USB.");
+};
+$("restoreFile").onchange=async e=>{
+  const f=e.target.files[0]; if(!f) return; e.target.value="";
+  try{ const j=JSON.parse(await f.text()); if(j.app!=="tro-ly-thu-vien-ntt2"||!j.data) throw 0;
+    if(!confirm("Khôi phục sẽ ghi đè dữ liệu hiện tại trên máy này. Tiếp tục?")) return;
+    Object.entries(j.data).forEach(([k,v])=>store.set(k,v)); msg("bkpMsg","Đã khôi phục. Trang sẽ tải lại."); setTimeout(()=>location.reload(),800);
+  }catch(err){ msg("bkpMsg","File không đúng định dạng sao lưu của ứng dụng này.",true); }
+};
+$("btnWipe").onclick=()=>{
+  if(!confirm("Xoá toàn bộ dữ liệu trên máy này? Thao tác không hoàn tác được.")) return;
+  try{ Object.keys(localStorage).filter(k=>k.startsWith(KEY)).forEach(k=>localStorage.removeItem(k)); }catch(e){}
+  location.reload();
+};
+
+/* ============================== KHỞI ĐỘNG ============================== */
+function init(){
+  try{ localStorage.setItem(KEY+"_t","1"); localStorage.removeItem(KEY+"_t"); }catch(e){ STORAGE_OK=false; document.querySelector(".sidefoot").innerHTML="<b style='color:#FFD86B'>Trình duyệt đang chặn lưu dữ liệu (có thể do chế độ ẩn danh). Đóng trang sẽ mất dữ liệu.</b>"; }
+  // văn bản
+  const groups=[...new Set(DOCS.map(d=>d.nhom))];
+  $("docSel").innerHTML = groups.map(g=>`<optgroup label="${g}">${DOCS.filter(d=>d.nhom===g).map(d=>`<option value="${d.id}">${esc(d.ten)}</option>`).join("")}</optgroup>`).join("");
+  $("d_kycv").innerHTML = `<option value="ht">Hiệu trưởng</option><option value="kt">KT. Hiệu trưởng – Phó Hiệu trưởng</option><option value="tv">Nhân viên thư viện</option>`;
+  fillSelect("bk_loai",BOOK_TYPES);
+  fillSelect("psExtras",EXTRAS); fillSelect("psOcc",OCCASIONS); fillSelect("psMood",MOODS); fillSelect("psShot",SHOTS);
+  fillSelect("vType",VTYPES); [...$("vType").options].forEach((o,i)=>o.value=VTYPES[i].id);
+  fillSelect("vLook",LOOKS); fillSelect("vMusic",MUSIC); fillSelect("vMood",MOODS);
+  fillHoso(); refreshBrand(); renderPList("ch"); renderPList("se"); refreshCharSelects();
+  $("legal").value=S.legal; $("aiDefault").value=S.settings.ai;
+  renderChecks("bkCheck",BOOK_CHECK); renderChecks("psCheck",POSTER_CHECK); renderChecks("vCheck",VIDEO_CHECK);
+
+  // khôi phục nháp
+  onDocSel();
+  if(panelLoad("p_vanban","draftDoc",["docSel"],id=>{ if(id==="docSel") onDocSel(); })){ if($("docPrompt").value) undim("docSt2","docSt3"); tyTouched = $("d_trichyeu").value !== fillTpl(curDoc().ty); refreshProfSum(); }
+  if(!$("d_ngay").value) $("d_ngay").value=todayISO();
+  const last=store.get("docLast",""); if(last){ $("docPage").innerHTML=last; checkDoc(); }
+  renderDocSaved();
+  panelLoad("p_sach","draftBook"); toggleMany(); renderBook(); renderBookSaved(); if($("bkPrompt").value) undim("bkSt5");
+  { const o=store.get("draftPoster",null); if(o && o.psStyleV) psV.value=o.psStyleV; renderPoster(); panelLoad("p_poster","draftPoster"); if($("psPrompt").value) undim("psSt4"); }
+  onVType(); panelLoad("p_video","draftVideo",["vType"]); if($("vPr").value) undim("vSt4");
+  autoDraft("p_vanban","draftDoc"); autoDraft("p_sach","draftBook"); autoDraft("p_poster","draftPoster"); autoDraft("p_video","draftVideo");
+  renderAIBars(); renderHome();
+  finSize(1200,1800); FIN.bgType="navy";
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>drawFin());
+  drawFin();
+}
+init();
+</script>
+</body>
+</html>
